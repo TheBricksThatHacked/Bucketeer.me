@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="post" class="login-form">
+    {% csrf_token %}
+    {% if request.GET.next %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}" />
+    {% endif %}
+    <div class="row">
+        <div class="five columns alpha">
+            <label for="username" class="sr-only">Username</label>
+            <h2 class="form-signin-heading">Please log in</h2>
+            <input type="text" name="username" value="" id="username" class="form-control" placeholder="Username" required autofocus>
+            <label for"password" class="sr-only">Password</label>
+            <input type="password" name="password" value="" id="password" class="form-control" placeholder="Password" required autofocus>
+            <button class="btn btn-primary btn-block" type="submit">Log in</button>
+            {% if login_failed %}
+            <p class="text-danger">Login failed: invalid username or password.</p>
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+{% endblock content %}
