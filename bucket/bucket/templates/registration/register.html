@@ -10,7 +10,7 @@
         </div>
         {% endif %}
         <div class="well form-well">
-            <form method="post">
+            <form method="post" {% if form.is_multipart %}enctype='multipart/form-data'{% endif %}>
                 {% csrf_token %}
                 {% if request.GET.next %}
                     <input type="hidden" name="next" value="{{ request.GET.next }}" />
@@ -79,5 +79,3 @@
 
 
 {% endblock content %}
-
-

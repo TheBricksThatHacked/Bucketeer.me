@@ -7,3 +7,6 @@ def index(request):
     return render_to_response("index.html", {
         'items': items
         })
+
+def user_profile(request, user_id=None):
+    return render_to_response("user_profile.html")
