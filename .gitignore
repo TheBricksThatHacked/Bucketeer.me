@@ -1,3 +1,4 @@
 migrations/
 *.pyc
 *.sqlite3
+*.sublime-workspace
