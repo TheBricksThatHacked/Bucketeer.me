@@ -9,4 +9,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^bucket/', include(appbucket_urls, namespace="app")),
+    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^register/$', 'bucket.views.register', name='register'),
 )

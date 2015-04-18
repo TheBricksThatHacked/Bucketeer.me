@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <h1>Create an Account</h1>
+</div>
+
+<form method="post" {% if form.is_multipart %}enctype='multipart/form-data'{% endif %}>
+    {% csrf_token %}
+    <table class="bootstrap-table">
+    {% for field in form %}
+        <tr>
+        {% if field.is_hidden %}
+            {{ field }}
+        {% else %}
+            <td class="col-left">{{ field.label_tag }}:</td>
+            <td class="col-right entry {% if field.errors.0 %}entry-error{% endif %}">
+                {{ field }}
+                <div class="text-danger">{{ field.errors.0 }}</div>
+            </td>
+        {% endif %}
+        </tr>
+    {% endfor %}
+    
+        <tr>
+            <td class="col-left">
+                <input class="btn btn-block btn-primary" type="submit" value="Create account" />
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock content %}
