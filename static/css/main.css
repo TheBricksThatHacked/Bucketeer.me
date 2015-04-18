@@ -1,0 +1,12 @@
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.border-left {
+  border-left: 1px solid #c4c4c4;
+}
+
+.form-well {
+  margin-top: 25px;
+}
