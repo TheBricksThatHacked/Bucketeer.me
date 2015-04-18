@@ -1,8 +1,29 @@
 {% extends "base.html" %}
+
+{% block jumbotron %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Hello, world!</h1>
+    <p>Take on the world and complete the things you've always wanted to do! Track, Complete, Share and Collect bucket list items with the people around you.</p>
+    <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+  </div>
+</div>
+{% endblock jumbotron %}
+
 {% block content %}
-<ul>
-{% for item in items %}
-    <li>{{ item }}</li>
-{% endfor %}
-</ul>
+<div class="row">
+  <div class="col-md-4">
+    <h2><i class="fa fa-map-marker"></i> Track</h2>
+    <p>Track your progress as you complete and work towards completing your bucketlist! </p>
+  </div>
+  <div class="col-md-4">
+    <h2><i class="fa fa-tags"></i> Collect</h2>
+    <p>Collect badges and achievements as you complete various items. Can you collect them all? </p>
+  </div>
+  <div class="col-md-4">
+    <h2><i class="fa fa-comments"></i> Share</h2>
+    <p>Share your store with the family, friends and the community. Find more items that you'd like to do and give others your ideas.</p>
+  </div>
+</div>
 {% endblock content %}
+
