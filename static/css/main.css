@@ -36,3 +36,7 @@ body {
   float: left;
   padding-right: 10px;
 }
+
+.tag {
+  cursor: pointer;
+}

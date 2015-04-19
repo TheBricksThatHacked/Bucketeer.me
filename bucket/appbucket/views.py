@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.forms import AuthenticationForm
 from django.template import RequestContext
 from taggit.models import Tag
+from django.db.models import Count
 import hashlib
 
 #Actual messages the achievements display
@@ -65,7 +66,7 @@ def user_profile(request, user_id=None):
       achievementClass = ""
       achievementImg = ""
 
-    user_tags = Tag.objects.filter(item__user=user)
+    user_tags = Tag.objects.filter(item__user=user).annotate(itemcount=Count('id')).order_by('-itemcount')
 
     return render_to_response("profile.html",
       {
