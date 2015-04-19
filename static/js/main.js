@@ -14,8 +14,8 @@ $(document).ready(function() {
     $(document).on('click', '.delete-item', function() {
         var itemId = $(this).parent().data('id');
         swal({
-                title: "Are you sure?",
-                text: "You will not be deleting this item.",
+                title: "Are you sure you'd like to delete this item?",
+                text: "",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
