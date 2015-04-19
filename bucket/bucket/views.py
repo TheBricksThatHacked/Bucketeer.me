@@ -18,3 +18,11 @@ def register(request):
         user_form = UserForm()
 
     return render(request, "registration/register.html", {"form" : user_form})
+
+def logout(request):
+    """
+    This function will attempt to logout. If no user is logged in, then it does
+    not error out.
+    """
+    auth.logout(request)
+    return redirect('app:index')
