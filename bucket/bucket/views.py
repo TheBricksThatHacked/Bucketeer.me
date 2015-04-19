@@ -1,20 +1,20 @@
 from django.contrib import auth
-from django.contrib.auth.forms import UserCreationForm
+from .forms import UserForm
 from django.shortcuts import render, redirect
 
 
 def register(request):
 
     if request.method == "POST":
-        user_form = UserCreationForm(request.POST)
+        user_form = UserForm(request.POST)
         if user_form.is_valid():
             user = user_form.save()
             #Next two lines automatically log the user in
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             auth.logout(request)
             auth.login(request, user)
-            return redirect('app:user_profile', user_id=user.id)
+            return redirect('app:edit_profile')
     else:
-        user_form = UserCreationForm()
+        user_form = UserForm()
 
     return render(request, "registration/register.html", {"form" : user_form})
