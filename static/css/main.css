@@ -20,7 +20,14 @@ body {
   margin: 6px 0;
 }
 
-.add-item{
+.add-item {
 	margin-left: 15px;
 }
 
+.add-item i {
+  padding-right: 5px;
+}
+
+.checkbox label {
+  font-size: 15px;
+}
