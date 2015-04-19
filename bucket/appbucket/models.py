@@ -15,7 +15,9 @@ class Item(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User)
-    location = models.CharField(max_length=100, default="")
+    location = models.CharField(max_length=100, blank=True)
+    bio = models.TextField(blank=True)
+    gender = models.CharField(max_length=20, blank=True)
 
 def user_post_save(sender, instance=None, created=False, **kwargs):
     if instance is not None and created:
