@@ -24,6 +24,7 @@ $(document).ready(function() {
             },
             function() {
                 swal("Deleted!", "Your item has been deleted.", "success");
+                delete_item(itemId);
             });
     });
 
@@ -31,7 +32,6 @@ $(document).ready(function() {
         var itemId = parseInt($(this).parent().data('id'));
         check(itemId);
     })
-
 });
 
 function check(id) {
@@ -55,4 +55,24 @@ function check(id) {
             console.log(jqXHR);
         }
     });
+}
+
+function delete_item(id) {
+    data = {}
+    data['csrfmiddlewaretoken'] = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+    data['item-id'] = id;
+    $.ajax({
+        url: '/ajax/delete/',
+        dataType: 'json',
+        method: 'POST',
+        data: data,
+        success: function(response) {
+            if (response.success) {
+                $(".item[data-id='" + id + "']").remove();
+            }
+        }, error: function(jqXHR) {
+            console.log("An ajax error occurred");
+            console.log(jqXHR);
+        }
+    })
 }

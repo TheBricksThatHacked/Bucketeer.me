@@ -26,6 +26,22 @@ def check(request): # or uncheck
     response["success"] = True
     return JsonResponse(response)
 
+def delete(request):
+    if (request.method != "POST"):
+        return HttpResponseBadRequest("/ajax/delete must be accessed using POST")
+    response = {
+        "success": False,
+    }
+    item_id = request.POST["item-id"]
+    item = get_object_or_404(Item, id=item_id)
+    if (item.user.id != request.user.id):
+        return HttpResponseForbidden("You do not have access to that item")
+    # User owns this item, delete it.
+    item.delete()
+    response["success"] = True
+    return JsonResponse(response)
+
 urlpatterns = patterns("",
     url(r'^check/$', check, name="check"),
+    url(r'^delete/$', delete, name="delete"),
 )
