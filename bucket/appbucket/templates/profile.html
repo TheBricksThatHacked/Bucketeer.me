@@ -84,18 +84,21 @@
             {% for item in user_items %}
                 <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}">
                     <i class="fa check-item {% if item.completed_date %}fa-check-circle-o{% else %}fa-circle-o{% endif %}"></i> {{ item.title }}
-
                     {% if user.id == profile_user.id %}
                         <a href="{% url 'app:edit_item' item.id %}"><i class="fa fa-pencil edit-item"></i></a>
-                    {% endif %}
-                    <p>{{ item.description }}</p>
-                    {% if user.id == profile_user.id %}
                         <i class="fa fa-times delete-item"></i>
                     {% endif %}
+                    <p>{{ item.description }}</p>
                 </li>
             {% empty %}
                 {% if user.id == profile_user.id %}
-                    <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
+                    <p>
+                        It looks like you do not have any bucket list items. Why not <a href="{% url "app:add_item" %}">add one</a>?
+                    </p>
+                {% else %}
+                    <p>
+                        It looks like this user hasn't created any bucket list items yet. Check back later.
+                    </p>
                 {% endif %}
             {% endfor %}
         </ul>
