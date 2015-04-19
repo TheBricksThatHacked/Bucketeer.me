@@ -1,16 +1,14 @@
 from .models import *
 from django.shortcuts import render_to_response
+from django.contrib.auth.forms import AuthenticationForm
+from django.template import RequestContext
 
 def index(request):
-
-    items = Item.objects.all()
-    return render_to_response("index.html", {
-        'items': items
-        })
+    return render_to_response("index.html", context_instance=RequestContext(request))
 
 def user_profile(request, user_id=None):
-    return render_to_response("profile.html")
+    return render_to_response("profile.html", context_instance=RequestContext(request))
 
 
 def edit_profile(request, user_id=None):
-    return render_to_response("editProfile.html")
+    return render_to_response("editProfile.html", context_instance=RequestContext(request))

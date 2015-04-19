@@ -15,3 +15,7 @@ body {
 .label {
   margin: 15px 0;
 }
+
+.logged-in-btns {
+  margin: 6px 0;
+}
