@@ -4,59 +4,90 @@
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        {% if register_failed %}
-        <div class="alert alert-dismissible alert-danger">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <strong>Oh snap!</strong> ERRORS!!!!
-        </div>
-        {% endif %}
         <div class="well form-well">
+            {% if update_success %}
+            <div class="alert alert-success">
+                <p>Changes saved successfully.</p>
+            </div>
+            {% endif %}
             <form method="post" {% if form.is_multipart %}enctype='multipart/form-data'{% endif %}>
                 {% csrf_token %}
                 {% if request.GET.next %}
                     <input type="hidden" name="next" value="{{ request.GET.next }}" />
                 {% endif %}
                 <fieldset>
-                    <legend>Edit/Update:</legend>
+                    <legend>Update Your User Profile</legend>
                     
-                    <div class="form-group">
+                    <div class="form-group {% if user_form.email.errors %}has-error{% endif %}">
                         <label for="inputEmail" class=" control-label">Email</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                            <input type="email" name="email" class="form-control" id="editEmail" placeholder="Email">
+                            <input type="email" name="email" class="form-control" id="editEmail" placeholder="Email"
+                                value="{% if user_form.email.value %}{{ user_form.email.value }}{% endif %}">
                         </div>
-
+                        {% for error in user_form.email.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if user_form.first_name.errors %}has-error{% endif %}">
                         <label for="inputFirstName" class="control-label">First Name</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                            <input type="text" name="firstName" class="form-control" id="editFirstName" placeholder="First Name">
+                            <input type="text" name="first_name" class="form-control" id="editFirstName" placeholder="First Name"
+                                value="{% if user_form.first_name.value %}{{ user_form.first_name.value }}{% endif %}">
                         </div>
-
+                        {% for error in user_form.first_name.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if user_form.last_name.errors %}has-error{% endif %}">
                         <label for="inputLastName" class=" control-label">Last Name</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                            <input type="text" name="lastName" class="form-control" id="editLastName" placeholder="Last Name">
+                            <input type="text" name="last_name" class="form-control" id="editLastName" placeholder="Last Name"
+                                value="{% if user_form.last_name.value %}{{ user_form.last_name.value }}{% endif %}">
                         </div>
-
+                        {% for error in user_form.last_name.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if profile_form.location.errors %}has-error{% endif %}">
                         <label for="inputLocation" class="control-label">Location</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                            <input type="text" name="location" class="form-control" id="editLocation" placeholder="Location">
+                            <input type="text" name="location" class="form-control" id="editLocation" placeholder="Location"
+                                value="{% if profile_form.location.value %}{{ profile_form.location.value }}{% endif %}">
                         </div>
+                        {% for error in profile_form.location.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                     <div class="form-group">
+                     <div class="form-group {% if profile_form.bio.errors %}has-error{% endif %}">
                         <label for="inputLocation" class="control-label">Brief Bio</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-                            <textarea name="bio" class="form-control" id="editBio" rows= "3">Tell us a little about yourself here!</textarea>
+                            <textarea name="bio" class="form-control" id="editBio" rows="3" placeholder="Tell us a little about yourself here!">{% if profile_form.bio.value %}{{ profile_form.bio.value }}{% endif %}</textarea>
                         </div>
+                        {% for error in profile_form.bio.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                     <div class="form-group">
+                     <div class="form-group {% if profile_form.gender.errors %}has-error{% endif %}">
                         <label for="inputLocation" class="control-label">Gender</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
-                            <input type="text" name="gender" class="form-control" id="editGender" placeholder="Gender">
+                            <input type="text" name="gender" class="form-control" id="editGender" placeholder="Gender"
+                                value="{% if profile_form.gender.value %}{{ profile_form.gender.value }}{% endif %}">
                         </div>
+                        {% for error in profile_form.gender.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
                     <div class="form-group">
                         <div class="pull-right">

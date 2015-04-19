@@ -69,7 +69,7 @@ def user_profile(request, user_id=None):
 
     return render_to_response("profile.html",
       {
-        'userProfile': user,
+        'userProfile': user.profile,
         'email_hash': email_hash,
         'user_items': user_items,
         'items_completed': items_completed,
@@ -83,12 +83,41 @@ def user_profile(request, user_id=None):
       }
       , context_instance=RequestContext(request))
 
+
 def my_profile(request):
     return user_profile(request, user_id=request.user.id)
 
 
-def edit_profile(request, user_id=None):
-    return render_to_response("edit_profile.html", context_instance=RequestContext(request))
+def edit_profile(request):
+
+    user = request.user
+    profile = user.profile
+    update_success = False
+
+    if request.method == "POST":
+        user_form = EditUserForm(request.POST)
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = request.user
+            user.first_name = request.POST["first_name"]
+            user.last_name = request.POST["last_name"]
+            user.email = request.POST["email"]
+            user.save()
+            profile_form.user_id = request.user.id
+            profile_form.save()
+            update_success = True
+            # Allow fallthrough to reload the same screen.
+    else:
+        user_form = EditUserForm(instance=user)
+        profile_form = ProfileForm(instance=profile)
+
+    context = {
+        'user_form'      : user_form,
+        'profile_form'   : profile_form,
+        'update_success' : update_success
+    }
+
+    return render_to_response("edit_profile.html", context, context_instance=RequestContext(request))
 
 # Create a bucket list item
 def add_item(request):
