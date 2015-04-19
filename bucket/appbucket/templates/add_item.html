@@ -49,7 +49,7 @@
                         <label for="item-tags" class=" control-label">Tags</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-tags"></i></span>
                             <input type="text" name="tags" class="form-control" id="item-tags"
-                                value="{% if form.tags.value %}{{ form.tags.value }}{% endif %}">
+                                value="{% if form.tags.value %}{% for tag in form.tags.value.all %} {{ tag }} {% endfor %}{% endif %}">
                         </div>
                         {% for error in form.tags.errors %}
                         <div class="alert alert-danger">

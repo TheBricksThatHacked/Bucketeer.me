@@ -51,7 +51,13 @@ body {
   transition:opacity 250ms ease-in;
 }
 
-.item:hover .delete-item {
+.edit-item {
+  opacity: 0;
+  color: #38B44A;
+  transition:opacity 250ms ease-in;
+}
+
+.item:hover .delete-item, .item:hover .edit-item {
   opacity: 1;
   cursor: pointer;
 }

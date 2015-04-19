@@ -81,7 +81,6 @@
             {% endif %}
         </h2>
         <ul class="list-unstyled items">
-
             {% for item in user_items %}
                 {% if item.completed_date %}
                     <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o check-item"></i> {{ item.title }}
@@ -99,10 +98,14 @@
                 {% if user.id == profile_user.id %}
                     <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
                 {% endif %}
-
             {% endfor %}
         </ul>
     </div>
 </div>
+<script>
+var profile_data = {
+    complete: {{ items_completed|length }},
+    total: {{ user_items|length }}
+}
+</script>
 {% endblock content %}
-
