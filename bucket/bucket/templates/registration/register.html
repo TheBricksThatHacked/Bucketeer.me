@@ -3,12 +3,6 @@
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        {% if register_failed %}
-        <div class="alert alert-dismissible alert-danger">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <strong>Oh snap!</strong> ERRORS!!!!
-        </div>
-        {% endif %}
         <div class="well form-well">
             <form method="post" {% if form.is_multipart %}enctype='multipart/form-data'{% endif %}>
                 {% csrf_token %}
@@ -17,47 +11,75 @@
                 {% endif %}
                 <fieldset>
                     <legend>Register</legend>
-                    <div class="form-group">
-                        <label for="inputUsername" class=" control-label">Username</label>
+                    <div class="form-group {% if form.username.errors %}has-error{% endif %}">
+                        <label for="inputUsername" class="control-label">Username</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Username">
+                            <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Username" 
+                                value="{% if form.username.value %}{{ form.username.value }}{% endif %}">
                         </div>
-
+                        {% for error in form.username.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form.password1.errors %}has-error{% endif %}">
                         <label for="inputPassword" class=" control-label">Password</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span>
                             <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password1">
                         </div>
-
+                        {% for error in form.password1.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form.password2.errors %}has-error{% endif %}">
                         <label for="inputPassword" class=" control-label">Confirm Password</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-lock"></i></span>
                             <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password2">
                         </div>
-
+                        {% for error in form.password2.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form.email.errors %}has-error{% endif %}">
                         <label for="inputEmail" class=" control-label">Email</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email">
+                            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email"
+                                value="{% if form.email.value %}{{ form.email.value }}{% endif %}">
                         </div>
-
+                        {% for error in form.email.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form.first_name.errors %}has-error{% endif %}">
                         <label for="inputFirstName" class="control-label">First name</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                            <input type="text" name="first_name" class="form-control" id="inputFirstName" placeholder="First Name">
+                            <input type="text" name="first_name" class="form-control" id="inputFirstName" placeholder="First Name" 
+                                value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}">
                         </div>
-
+                        {% for error in form.first_name.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form.last_name.errors %}has-error{% endif %}">
                         <label for="inputLastName" class=" control-label">Last Name</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                            <input type="text" name="last_name" class="form-control" id="inputLastName" placeholder="Last Name">
+                            <input type="text" name="last_name" class="form-control" id="inputLastName" placeholder="Last Name" 
+                            value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}">
                         </div>
-
+                        {% for error in form.last_name.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
                     </div>
                     <div class="form-group">
                         <div class="pull-right">
