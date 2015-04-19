@@ -12,16 +12,20 @@ import hashlib
 
 class Achievement():
     slots = ("active", "message", "css_class", "image")
-    def __init__(self, num_completed, num_total):
+    def __init__(self, achievement):
         self.active = True
-        if num_completed == 1:
+        if achievement == "one":
             self.message = "<strong>Congratulations, you've crossed one thing off of your bucket list!</strong> It's just a drop in the bucket though; keep going out and doing more things!"
             self.css_class = "alert-info"
-            self.image = "bucket/bucketFull.png"
-        elif num_completed == num_total:
+            self.image = "bucket/waterDropBucket.png"
+        elif achievement == "many":
             self.message = "<strong>Congratulations, you've completed every item on your bucket list!</strong> Don't rest on your laurels though; add some more things to your list and keep going!"
             self.css_class = "alert-success"
-            self.image = "bucket/waterDropBucket.png"
+            self.image = "bucket/bucketFull.png"
+        elif achievement == "bday":1
+            self.message = "<strong>Congratulations, it's the anniversary of when you registered!</strong> Celebrate your bucket day by doing more exciting things!"
+            self.css_class = "alert-success"
+            self.image = "bucket/birthdayBucket.png"
         else:
             self.active = False
 
@@ -36,7 +40,7 @@ def index(request):
     return render_to_response("index.html", context_instance=RequestContext(request))
 
 def user_profile(request, user_id=None):
-    profile_user = User.objects.get(id=user_id)
+    profile_user = get_object_or_404(User, id=user_id)
 
     enc_email = profile_user.email.strip().lower().encode("utf-8")
     email_hash = hashlib.md5(enc_email).hexdigest()
@@ -53,7 +57,8 @@ def user_profile(request, user_id=None):
     percentCompleted = ( num_completed / num_total ) * 100
     percentUnCompleted = 100 - percentCompleted
 
-    achievement = Achievement(num_completed, num_total)
+    achievement, badges = get_badges(profile_user)
+
 
     user_tags = Tag.objects.filter(item__user=profile_user).annotate(itemcount=Count('id')).order_by('-itemcount')
 
@@ -66,14 +71,14 @@ def user_profile(request, user_id=None):
         'percent_completed'   : percentCompleted,
         'user_tags'           : user_tags,
         'achievement'         : achievement,
-        'badges'              : get_badges(profile_user),
+        'badges'              : badges,
     }
 
     return render_to_response("profile.html", context, context_instance=RequestContext(request))
 
 def get_badges(user):
     badges = []
-
+    achievement = Achievement("none")
     num_items = Item.objects.filter(user = user).count()
     num_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True).count()
 
@@ -84,10 +89,13 @@ def get_badges(user):
 
     # Completionist
     if (num_items >= 10) and (num_completed == num_items):
+        achievement = Achievement("many")
         badges.append('<span title="100% Complete" class="label label-info label-lg"><i class="fa fa-bar-chart"></i> Completionist</span>')
 
     # Newbie
     if (num_items < 3):
+        if(num_items == 1):
+            achievement = Achievement("one")
         badges.append('<span title="Have fewer than 3 items" class="label label-success label-lg"><i class="fa fa-child"></i> Newbie</span>')
 
     # Intermediate
@@ -121,9 +129,10 @@ def get_badges(user):
 
     # Bucket Day
     if (User.objects.filter(id = user.id).datetimes("date_joined", "day")[0].replace(year=2000).date()) == datetime.now().replace(year=2000).date():
+        achievement = Achievement("bday")
         badges.append('<span title="Celebrate your registration anniversary!" class="label label-info label-lg"><i class="fa fa-birthday-cake"></i> Bucket Day</span>')
 
-    return badges
+    return achievement, badges
 
 
 @login_required
