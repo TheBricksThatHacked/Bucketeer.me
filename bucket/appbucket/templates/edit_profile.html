@@ -4,12 +4,6 @@
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        {% if register_failed %}
-        <div class="alert alert-dismissible alert-danger">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <strong>Oh snap!</strong> ERRORS!!!!
-        </div>
-        {% endif %}
         <div class="well form-well">
             <form method="post" {% if form.is_multipart %}enctype='multipart/form-data'{% endif %}>
                 {% csrf_token %}
@@ -17,45 +11,50 @@
                     <input type="hidden" name="next" value="{{ request.GET.next }}" />
                 {% endif %}
                 <fieldset>
-                    <legend>Edit/Update:</legend>
+                    <legend>Update Your User Profile</legend>
                     
-                    <div class="form-group">
+                    <div class="form-group {% if form.email.errors %}has-error{% endif %}">
                         <label for="inputEmail" class=" control-label">Email</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                            <input type="email" name="email" class="form-control" id="editEmail" placeholder="Email">
+                            <input type="email" name="email" class="form-control" id="editEmail" placeholder="Email"
+                                value="{% if form.email.value %}{{ form.email.value }}{% endif %}">
                         </div>
 
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form.first_name.errors %}has-error{% endif %}">
                         <label for="inputFirstName" class="control-label">First Name</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                            <input type="text" name="firstName" class="form-control" id="editFirstName" placeholder="First Name">
+                            <input type="text" name="first_name" class="form-control" id="editFirstName" placeholder="First Name"
+                                value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}">
                         </div>
 
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form.last_name.errors %}has-error{% endif %}">
                         <label for="inputLastName" class=" control-label">Last Name</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-                            <input type="text" name="lastName" class="form-control" id="editLastName" placeholder="Last Name">
+                            <input type="text" name="last_name" class="form-control" id="editLastName" placeholder="Last Name"
+                                value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}">
                         </div>
 
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form.location.errors %}has-error{% endif %}">
                         <label for="inputLocation" class="control-label">Location</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                            <input type="text" name="location" class="form-control" id="editLocation" placeholder="Location">
+                            <input type="text" name="location" class="form-control" id="editLocation" placeholder="Location"
+                                value="{% if form.location.value %}{{ form.location.value }}{% endif %}">
                         </div>
                     </div>
-                     <div class="form-group">
+                     <div class="form-group {% if form.bio.errors %}has-error{% endif %}">
                         <label for="inputLocation" class="control-label">Brief Bio</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-                            <textarea name="bio" class="form-control" id="editBio" rows= "3">Tell us a little about yourself here!</textarea>
+                            <textarea name="bio" class="form-control" id="editBio" rows="3" placeholder="Tell us a little about yourself here!">{% if form.bio.value %}{{ form.bio.value }}{% endif %}</textarea>
                         </div>
                     </div>
-                     <div class="form-group">
+                     <div class="form-group {% if form.gender.errors %}has-error{% endif %}">
                         <label for="inputLocation" class="control-label">Gender</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
-                            <input type="text" name="gender" class="form-control" id="editGender" placeholder="Gender">
+                            <input type="text" name="gender" class="form-control" id="editGender" placeholder="Gender"
+                                value="{% if form.gender.value %}{{ form.gender.value }}{% endif %}">
                         </div>
                     </div>
                     <div class="form-group">
