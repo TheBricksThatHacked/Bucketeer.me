@@ -3,6 +3,7 @@ from .forms import *
 from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from taggit.models import Tag
 import hashlib
@@ -48,7 +49,6 @@ def user_profile(request, user_id=None):
     user_tags = Tag.objects.filter(item__user=user)
 
     context = {
-        'userProfile'       : user.profile,
         'email_hash'        : email_hash,
         'user_items'        : user_items,
         'items_completed'   : items_completed,
@@ -64,7 +64,7 @@ def user_profile(request, user_id=None):
 def my_profile(request):
     return user_profile(request, user_id=request.user.id)
 
-
+@login_required
 def edit_profile(request):
 
     user = request.user

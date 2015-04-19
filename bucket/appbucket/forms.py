@@ -10,7 +10,7 @@ class ItemForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ["location", "bio", "gender"]
+        fields = ["location", "bio", "gender", "age"]
 
 class EditUserForm(forms.ModelForm):
     class Meta:

@@ -27,11 +27,11 @@
             </div>
             <div class="col-md-8">
                 <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-                {% if userProfile.gender or userProfile.age %}
-                    <p>{{ userProfile.gender }} {{ userProfile.age }}</p>
+                {% if user.profile.gender or user.profile.age %}
+                    <p>{{ user.profile.gender }} {{ user.profile.age }}</p>
                 {% endif %}
-                {% if userProfile.location %}
-                    <p><i class="fa fa-map-marker"></i> {{ userProfile.location }}</p>
+                {% if user.profile.location %}
+                    <p><i class="fa fa-map-marker"></i> {{ user.profile.location }}</p>
                 {% endif %}
                 <p>
                     <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
@@ -44,7 +44,7 @@
                     <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
                     <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
                 </p>
-                <p>{{ user.get_profile.bio }}</p>
+                <p>{{ user.profile.bio }}</p>
 
                 <p><i class="fa fa-check-circle-o"></i> {{ items_completed|length }} Items completed</p>
                 <p><i class="fa fa-circle-o"></i> {{ user_items|length }} Items total</p>

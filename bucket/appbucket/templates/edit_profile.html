@@ -66,7 +66,7 @@
                         </div>
                         {% endfor %}
                     </div>
-                     <div class="form-group {% if profile_form.bio.errors %}has-error{% endif %}">
+                    <div class="form-group {% if profile_form.bio.errors %}has-error{% endif %}">
                         <label for="inputLocation" class="control-label">Brief Bio</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
                             <textarea name="bio" class="form-control" id="editBio" rows="3" placeholder="Tell us a little about yourself here!">{% if profile_form.bio.value %}{{ profile_form.bio.value }}{% endif %}</textarea>
@@ -77,13 +77,25 @@
                         </div>
                         {% endfor %}
                     </div>
-                     <div class="form-group {% if profile_form.gender.errors %}has-error{% endif %}">
+                    <div class="form-group {% if profile_form.gender.errors %}has-error{% endif %}">
                         <label for="inputLocation" class="control-label">Gender</label>
                         <div class="input-group"><span class="input-group-addon"><i class="fa fa-venus-mars"></i></span>
                             <input type="text" name="gender" class="form-control" id="editGender" placeholder="Gender"
                                 value="{% if profile_form.gender.value %}{{ profile_form.gender.value }}{% endif %}">
                         </div>
                         {% for error in profile_form.gender.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group {% if profile_form.age.errors %}has-error{% endif %}">
+                        <label for="inputAge" class="control-label">Age</label>
+                        <div class="input-group"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="number" name="age" class="form-control" id="editAge" placeholder="Age"
+                                value="{% if profile_form.age.value %}{{ profile_form.age.value }}{% endif %}">
+                        </div>
+                        {% for error in profile_form.age.errors %}
                         <div class="alert alert-danger">
                             <p>{{ error }}</p>
                         </div>
