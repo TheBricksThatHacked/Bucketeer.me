@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block jumbotron %}
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                {% load staticfiles %}
+                <img src="{% static "bucket/BucketLogo.png" %}" class="img-responsive"/>
+            </div>
+            <div class="col-md-8">
+                <h1>Badges</h1>
+                <p>
+                    Here are some of the badges you can earn using Bucketeer!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock jumbotron %}
+
+{% block content %}
+<div class="row">
+<!--
+    <span title="Complete 5 items tagged 'travel'" class="label label-success label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+    <span title="100% Complete" class="label label-info label-lg"><i class="fa fa-bar-chart"></i> Completionist</span>
+    <span title="Have fewer than 3 items" class="label label-success label-lg"><i class="fa fa-child"></i> Newbie</span>
+    <span title="Have between 3 and 25 items" class="label label-warning label-lg"><i class="fa fa-graduation-cap"></i> Intermediate</span>
+    <span title="Have greater than 25 items" class="label label-danger label-lg"><i class="fa fa-diamond"></i> Hardcore</span>
+    <span title="Have more than 50 items, with at least half complete" class="label label-danger label-lg"><i class="fa fa-bitbucket"></i> Big Bucket</span>
+    <span title="Be in the top 10% of users, based on completion percentage" class="label label-primary label-lg"><i class="fa fa-pie-chart"></i> Top 10%</span>
+    <span title="Have a completion of exactly 50%" class="label label-info label-lg"><i class="fa fa-adjust"></i> 50-50</span>
+    <span title="Remain a registered user for at least 1 year" class="label label-default label-lg"><i class="fa fa-trophy"></i> 5 Year Club</span>
+    <span title="Have at least 10 items, with less than 10% complete" class="label label-default label-lg"><i class="fa fa-bed"></i> Dreamer</span>
+    <span title="Celebrate your registration anniversary!" class="label label-info label-lg"><i class="fa fa-birthday-cake"></i> Bucket Day</span>
+-->
+
+    <table class="table table-hover">
+        <thead>
+            <td>Badge</td>
+            <td>Criteria</td>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <span title="Complete 5 items tagged 'travel'" class="label label-success label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                </td>
+                <td>
+                    Complete 5 items tagged 'travel'
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="100% Complete" class="label label-info label-lg"><i class="fa fa-bar-chart"></i> Completionist</span>
+                </td>
+                <td>
+                    100% Complete
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Have fewer than 3 items" class="label label-success label-lg"><i class="fa fa-child"></i> Newbie</span>
+                </td>
+                <td>
+                    Have fewer than 3 items
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Have between 3 and 25 items" class="label label-warning label-lg"><i class="fa fa-graduation-cap"></i> Intermediate</span>
+                </td>
+                <td>
+                    Have between 3 and 25 items
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Have greater than 25 items" class="label label-danger label-lg"><i class="fa fa-diamond"></i> Hardcore</span>
+                </td>
+                <td>
+                    Have greater than 25 items
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Have more than 50 items, with at least half complete" class="label label-danger label-lg"><i class="fa fa-bitbucket"></i> Big Bucket</span>
+                </td>
+                <td>
+                    Have more than 50 items, with at least half complete
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Be in the top 10% of users, based on completion percentage" class="label label-primary label-lg"><i class="fa fa-pie-chart"></i> Top 10%</span>
+                </td>
+                <td>
+                    Be in the top 10% of users, based on completion percentage
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Have a completion of exactly 50%" class="label label-info label-lg"><i class="fa fa-adjust"></i> 50-50</span>
+                </td>
+                <td>
+                    Have a completion of exactly 50%
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Remain a registered user for at least 1 year" class="label label-default label-lg"><i class="fa fa-trophy"></i> 5 Year Club</span>
+                </td>
+                <td>
+                    Remain a registered user for at least 1 year
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Have at least 10 items, with less than 10% complete" class="label label-default label-lg"><i class="fa fa-bed"></i> Dreamer</span>
+                </td>
+                <td>
+                    Have at least 10 items, with less than 10% complete
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span title="Celebrate your registration anniversary!" class="label label-info label-lg"><i class="fa fa-birthday-cake"></i> Bucket Day</span>
+                </td>
+                <td>
+                    Celebrate your registration anniversary!
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

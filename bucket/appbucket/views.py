@@ -33,8 +33,8 @@ class Achievement():
 def about(request):
     return render_to_response("about.html", context_instance=RequestContext(request))
 
-
-
+def badges(request):
+    return render_to_response("badges.html", context_instance=RequestContext(request))
 
 def index(request):
     return render_to_response("index.html", context_instance=RequestContext(request))
