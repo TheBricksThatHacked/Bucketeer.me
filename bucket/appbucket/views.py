@@ -73,47 +73,48 @@ def get_badges(user):
     # World Traveler 
     #if Item.objects.filter(user = user).exclude(completed_date__isnull=True).tags.filter(tags__name__in = ["travel"]).count() >= 5:
     #    pass
-    #badges.append('<span class="label label-success label-lg"><i class="fa fa-trophy"></i> World Traveler</span>')
+    #badges.append('<span title="Complete 5 items tagged 'travel'" class="label label-success label-lg"><i class="fa fa-trophy"></i> World Traveler</span>')
 
     # Completionist
     if (num_items >= 10) and (num_completed == num_items):
-        badges.append('<span class="label label-info label-lg"><i class="fa fa-bar-chart"></i> Completionist</span>')
+        badges.append('<span title="100% Complete" class="label label-info label-lg"><i class="fa fa-bar-chart"></i> Completionist</span>')
 
     # Newbie
     if (num_items < 3):
-        badges.append('<span class="label label-success label-lg"><i class="fa fa-child"></i> Newbie</span>')
+        badges.append('<span title="Have fewer than 3 items" class="label label-success label-lg"><i class="fa fa-child"></i> Newbie</span>')
 
     # Intermediate
     if (num_items >= 3) and (num_items <= 25):
-        badges.append('<span class="label label-warning label-lg"><i class="fa fa-graduation-cap"></i> Intermediate</span>')
+        badges.append('<span title="Have between 3 and 25 items" class="label label-warning label-lg"><i class="fa fa-graduation-cap"></i> Intermediate</span>')
 
     # Hardcore
     if (num_items > 25):
-        badges.append('<span class="label label-danger label-lg"><i class="fa fa-diamond"></i> Hardcore</span>')
+        badges.append('<span title="Have greater than 25 items" class="label label-danger label-lg"><i class="fa fa-diamond"></i> Hardcore</span>')
 
     # Big Bucket
     if (num_items > 50) and (num_completed > (num_items / 2)):
-        badges.append('<span class="label label-danger label-lg"><i class="fa fa-bitbucket"></i> Big Bucket</span>')
+        badges.append('<span title="Have more than 50 items, with at least half complete" class="label label-danger label-lg"><i class="fa fa-bitbucket"></i> Big Bucket</span>')
 
     # Top 10%
+    # badges.append('<span title="Be in the top 10% of users, based on completion percentage" class="label label-primary label-lg"><i class="fa fa-pie-chart"></i> Top 10%</span>')
 
     # 50-50
     if (num_items > 0) and (num_completed == (num_items / 2)):
-        badges.append('<span class="label label-info label-lg"><i class="fa fa-adjust"></i> 50-50</span>')
+        badges.append('<span title="Have a completion of exactly 50%" class="label label-info label-lg"><i class="fa fa-adjust"></i> 50-50</span>')
 
     # X Year Club
     years_passed = ((datetime.now() - User.objects.filter(id = user.id).datetimes("date_joined", "hour")[0]).days // 365)
     if (years_passed) > 1:
     #    years_passed club
-        badges.append('<span class="label label-default label-lg"><i class="fa fa-trophy"></i> {0} Year Club</span>'.format(years_passed))
+        badges.append('<span title="Remain a registered user for at least 1 year" class="label label-default label-lg"><i class="fa fa-trophy"></i> {0} Year Club</span>'.format(years_passed))
 
     # Dreamer
-    if (num_items > 10) and (num_completed / num_items) < 0.1:
-        badges.append('<span class="label label-default label-lg"><i class="fa fa-bed"></i> Dreamer</span>')
+    if (num_items >= 10) and (num_completed / num_items) < 0.1:
+        badges.append('<span title="Have at least 10 items, with less than 10% complete" class="label label-default label-lg"><i class="fa fa-bed"></i> Dreamer</span>')
 
     # Bucket Day
     if (User.objects.filter(id = user.id).datetimes("date_joined", "day")[0].replace(year=2000).date()) == datetime.now().replace(year=2000).date():
-        badges.append('<span class="label label-info label-lg"><i class="fa fa-birthday-cake"></i> Bucket Day</span>')
+        badges.append('<span title="Celebrate your registration anniversary!" class="label label-info label-lg"><i class="fa fa-birthday-cake"></i> Bucket Day</span>')
 
     return badges
 
