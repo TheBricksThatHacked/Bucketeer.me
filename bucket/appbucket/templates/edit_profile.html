@@ -7,7 +7,9 @@
         <div class="well form-well">
             {% if update_success %}
             <div class="alert alert-success">
-                <p>Changes saved successfully.</p>
+                <p>
+                    <strong>Changes saved successfully.</strong> <a href="{% url "app:my_profile" %}">View your profile.</a>
+                </p>
             </div>
             {% endif %}
             <form method="post" {% if form.is_multipart %}enctype='multipart/form-data'{% endif %}>
