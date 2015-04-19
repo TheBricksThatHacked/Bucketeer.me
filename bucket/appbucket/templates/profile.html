@@ -5,12 +5,16 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <img src="https://placeimg.com/300/300/people" class="img-responsive img-circle img-thumbnail" />
+        <img src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=300" class="img-responsive img-circle img-thumbnail" />
       </div>
       <div class="col-md-8">
-        <h1>Zachary Friss</h1>
-        <p>Male, 21</p>
-        <p><i class="fa fa-map-marker"></i> Rochester NY</p>
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+        {% if userProfile.gender or userProfile.age %}
+          <p>{{ userProfile.gender }} {{ userProfile.age }}</p>
+        {% endif %}
+        {% if userProfile.location %}
+          <p><i class="fa fa-map-marker"></i> {{ userProfile.location }}</p>
+        {% endif %}
         <p>
           <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
           <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
@@ -22,12 +26,7 @@
           <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
           <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
         </p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>{{ user.get_profile.bio }}</p>
 
         <p><i class="fa fa-check-circle-o"></i> 9001 Items completed</p>
         <p><i class="fa fa-circle-o"></i> 9009 Items</p>
