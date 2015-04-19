@@ -1,6 +1,7 @@
 body {
   padding-top: 50px;
   padding-bottom: 20px;
+  font-size: 18px;
 }
 
 .border-left {
@@ -9,4 +10,8 @@ body {
 
 .form-well {
   margin-top: 25px;
+}
+
+.label {
+  margin: 15px 0;
 }
