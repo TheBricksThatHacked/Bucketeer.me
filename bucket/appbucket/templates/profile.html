@@ -28,9 +28,8 @@
             </div>
             <div class="col-md-8">
                 <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-                {% if user.profile.gender or user.profile.age %}
-                    <p>{{ user.profile.gender }} {{ user.profile.age }}</p>
-                {% endif %}
+                {% if user.profile.gender %}<p>{{ user.profile.gender }}</p>{% endif %}
+                {% if user.profile.age and user.profile.age != 0 %}<p>Age: {{ user.profile.age }}</p>{% endif %}
                 {% if user.profile.location %}
                     <p><i class="fa fa-map-marker"></i> {{ user.profile.location }}</p>
                 {% endif %}

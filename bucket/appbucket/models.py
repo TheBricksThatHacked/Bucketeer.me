@@ -20,7 +20,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=100, blank=True)
     bio = models.TextField(blank=True)
     gender = models.CharField(max_length=20, blank=True)
-    age = models.IntegerField(default=0)
+    age = models.IntegerField(default=0, blank=True, null=True)
 
 def user_post_save(sender, instance=None, created=False, **kwargs):
     if instance is not None and created:
