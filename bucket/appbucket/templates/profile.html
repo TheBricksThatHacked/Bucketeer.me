@@ -36,17 +36,13 @@
                 {% if profile_user.profile.location %}
                     <p><i class="fa fa-map-marker"></i> {{ profile_user.profile.location }}</p>
                 {% endif %}
+                {% if badges %}
                 <p>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    {% for badge in badges %}
+                    {{ badge|safe }}
+                    {% endfor %}
                 </p>
+                {% endif %}
                 <p>{{ profile_user.profile.bio }}</p>
 
                 <p><i class="fa fa-check-circle-o"></i> <span id="items-complete">{{ items_completed|length }}</span> Items completed</p>
