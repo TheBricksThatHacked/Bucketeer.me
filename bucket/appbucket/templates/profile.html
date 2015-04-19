@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block jumbotron %}
+{% csrf_token %}
 <div class="jumbotron">
     <div class="container">
         {% if achievement.active %}
