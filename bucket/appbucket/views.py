@@ -50,13 +50,13 @@ def user_profile(request, user_id=None):
     user_tags = Tag.objects.filter(item__user=user).annotate(itemcount=Count('id')).order_by('-itemcount')
 
     context = {
-        'email_hash'        : email_hash,
-        'user_items'        : user_items,
-        'items_completed'   : items_completed,
-        'percentUnCompleted': percentUnCompleted,
-        'percentCompleted'  : percentCompleted,
-        'userTags'          : user_tags,
-        'achievement'       : achievement,
+        'email_hash'          : email_hash,
+        'user_items'          : user_items,
+        'items_completed'     : items_completed,
+        'percent_uncompleted' : percentUnCompleted,
+        'percent_completed'   : percentCompleted,
+        'user_tags'           : user_tags,
+        'achievement'         : achievement,
     }
 
     return render_to_response("profile.html", context, context_instance=RequestContext(request))

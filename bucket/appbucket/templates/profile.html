@@ -46,12 +46,12 @@
                 </p>
                 <p>{{ user.profile.bio }}</p>
 
-                <p><i class="fa fa-check-circle-o"></i> {{ items_completed|length }} Items completed</p>
-                <p><i class="fa fa-circle-o"></i> {{ user_items|length }} Items total</p>
-                <p><i class="fa fa-bar-chart"></i> {{ percentCompleted }}% Complete</p>
+                <p><i class="fa fa-check-circle-o"></i> <span id="items-complete">{{ items_completed|length }}</span> Items completed</p>
+                <p><i class="fa fa-circle-o"></i> <span id="items-total">{{ user_items|length }}</span> Items total</p>
+                <p><i class="fa fa-bar-chart"></i> <span id="percent-complete-display">{{ percent_completed }}</span>% Complete</p>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-success" style="width: {{percentCompleted}}%"></div>
-                    <div class="progress-bar progress-bar-danger" style="width: {{percentUnCompleted}}%"></div>
+                    <div class="progress-bar progress-bar-success" id="percent-complete-bar" style="width: {{percent_completed}}%"></div>
+                    <div class="progress-bar progress-bar-danger" id="percent-uncomplete-bar" style="width: {{percent_uncompleted}}%"></div>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
             <li data-tag-selector="all" class="list-group-item tag">
                 All
             </li>
-            {% for tag in userTags %}
+            {% for tag in user_tags %}
             <li data-tag-selector="{{ tag }}" class="list-group-item tag">
                 <span class="badge">{{ tag.itemcount }}</span> {{ tag }}
             </li>
