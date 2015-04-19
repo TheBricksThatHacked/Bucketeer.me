@@ -3,17 +3,18 @@
 {% block jumbotron %}
 <div class="jumbotron">
   <div class="container">
-    <div class="alert alert-success alert-dismissable" vertical-align = "middle">
-    <a href="#" class="close" data-dismiss="alert">&times;</a>
-    {% load staticfiles %}
-    <p><img src="{% static "bucket/bucketFull.png" %}" class="img-responsive" style="float: left; PADDING-RIGHT: 10px"/><br>Congratulations, you've completed every item on your bucket list! Don't rest on your laurels though; add some more things to your list and keep going!<br><br><br></p>
-    </div>
 
-    <div class="alert alert-success alert-info" vertical-align = "middle">
-    <a href="#" class="close" data-dismiss="alert">&times;</a>
-    {% load staticfiles %}
-    <p><img src="{% static "bucket/waterDropBucket.png" %}" class="img-responsive" style="float: left; PADDING-RIGHT: 10px"/><br>Congratulations, you've crossed one thing off of your bucket list! It's just a drop in the bucket though; keep going out and doing more things!<br><br><br></p>
-    </div>
+    {% if achievement %}
+      <div class="{{achievementClass}}" vertical-align = "middle">
+      <a href="#" class="close" data-dismiss="alert">&times;</a>
+      {% load staticfiles %}
+      <p>
+        <img src="{% static achievementImg %}" class="img-responsive achievement-image" />
+        {{achievementMsg|safe}}
+      </p>
+      </div>
+    {% endif %}
+
     <div class="row">
       <div class="col-md-4">
         <img src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=300" class="img-responsive img-circle img-thumbnail" />
@@ -57,7 +58,8 @@
   <div class="col-md-3 ">
     <h2><i class="fa fa-tags"></i> Tags</h2>
     <ul class="list-group">
-    <li class="list-group-item">
+    {{user_tags}}
+      <li class="list-group-item">
         <span class="badge">14</span> All
       </li>
       <li class="list-group-item">
@@ -75,8 +77,11 @@
     <h2><i class="fa fa-paper-plane-o"></i> List <a href="/addItem" class="btn btn-success btn-sm add-item"><i class="fa fa-plus"></i> Add to List</a></h2>
     <ul class="list-unstyled">
       {% for item in user_items %}
-        <li><i class="fa fa-circle-o"></i> {{item.title}} <p>{{item.description}}</p></li>
-        <li><i class="fa fa-check-circle-o"></i> {{item.title}} <p>{{item.description}}</p></li>
+        {% if item.completed_date %}
+          <li><i class="fa fa-check-circle-o"></i> {{item.title}} <p>{{item.description}}</p></li>
+        {% else %}
+          <li><i class="fa fa-circle-o"></i> {{item.title}} <p>{{item.description}}</p></li>
+        {% endif %}
       {% empty %}
         <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
       {% endfor %}

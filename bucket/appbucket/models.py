@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 from django.db.models.signals import post_save
+from taggit.managers import TaggableManager
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
@@ -9,6 +10,7 @@ class Item(models.Model):
     created_date = models.DateTimeField(default=datetime.now)
     completed_date = models.DateTimeField(blank=True, null=True)
     user = models.ForeignKey(User)
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title
