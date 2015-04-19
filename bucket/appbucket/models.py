@@ -6,8 +6,8 @@ from django.db.models.signals import post_save
 class Item(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    createdDate = models.DateTimeField(default=datetime.now)
-    completedDate = models.DateTimeField(blank=True, null=True)
+    created_date = models.DateTimeField(default=datetime.now)
+    completed_date = models.DateTimeField(blank=True, null=True)
     user = models.ForeignKey(User)
 
     def __str__(self):
