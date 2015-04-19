@@ -1,48 +1,58 @@
+$(document).ready(function() {
 
-$(document).ready(function () {
+    $(document).on('click', '.tag', function() {
+        var tag = $(this).data('tag-selector');
+        if (tag === "all") {
+            $('.item').removeClass('hidden');
+        } else {
+            $('.item').not('.' + tag).addClass('hidden');
+            $('.' + tag).removeClass('hidden')
+        }
 
-  $(document).on('click', '.tag', function () {
-  var tag = $(this).data('tag-selector');
-  if(tag === "all"){
-    $('.item').removeClass('hidden');
-  }else{
-    $('.item').not('.'+tag).addClass('hidden');
-    $('.'+tag).removeClass('hidden')
-  }
+    });
 
-  });
+    $(document).on('click', '.delete-item', function() {
+        var itemId = $(this).parent().data('id');
+        swal({
+                title: "Are you sure?",
+                text: "You will not be deleting this item.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+            function() {
+                swal("Deleted!", "Your item has been deleted.", "success");
+            });
+    });
 
-  $(document).on('click', '.delete-item', function () {
-    var itemId = $(this).parent().data('id');
-    console.log("Delete Item: " + itemId)
-  });
-
-  $(document).on('click', '.check-item', function() {
-    var itemId = parseInt($(this).parent().data('id'));
-    check(itemId);
-  })
+    $(document).on('click', '.check-item', function() {
+        var itemId = parseInt($(this).parent().data('id'));
+        check(itemId);
+    })
 
 });
 
 function check(id) {
-  data = {};
-  data['csrfmiddlewaretoken'] = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-  data['item-id'] = id;
-  $.ajax({
-    url: '/ajax/check/',
-    dataType: 'json',
-    method: 'POST',
-    data: data,
-    success: function(response) {
-      if (response.checked) {
-        $(".item[data-id='" + id+"'] .check-item").removeClass("fa-circle-o").addClass("fa-check-circle-o");
-      } else {
-        $(".item[data-id='" + id+"'] .check-item").removeClass("fa-check-circle-o").addClass("fa-circle-o");
-      }
-    }, error: function(jqXHR) {
-      console.log("An ajax error occurred");
-      console.log(jqXHR);
-    }
-  });
+    data = {};
+    data['csrfmiddlewaretoken'] = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+    data['item-id'] = id;
+    $.ajax({
+        url: '/ajax/check/',
+        dataType: 'json',
+        method: 'POST',
+        data: data,
+        success: function(response) {
+            if (response.checked) {
+                $(".item[data-id='" + id + "'] .check-item").removeClass("fa-circle-o").addClass("fa-check-circle-o");
+            } else {
+                $(".item[data-id='" + id + "'] .check-item").removeClass("fa-check-circle-o").addClass("fa-circle-o");
+            }
+        },
+        error: function(jqXHR) {
+            console.log("An ajax error occurred");
+            console.log(jqXHR);
+        }
+    });
 }
-
