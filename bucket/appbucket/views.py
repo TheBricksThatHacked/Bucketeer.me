@@ -7,26 +7,20 @@ from django.template import RequestContext
 from taggit.models import Tag
 import hashlib
 
-#Actual messages the achievements display
-achievementMsgStrs = {
-	'one' : """<br>Congratulations, you've crossed one thing off of your bucket list!
-	It's just a drop in the bucket though; keep going out and doing more things!<br><br><br>""",
-	'all': """<br>Congratulations, you've completed every item on your bucket list!
-	Don't rest on your laurels though; add some more things to your list and keep going!<br><br><br>""",
-}
-
-#Achievement class strings
-achieveClassStrs = {
-	'one' : "alert alert-success alert-info alert-dismissable",
-	'many' : "alert alert-success alert-dismissable",
-}
-
-#Achievement image urls.
-achieveImageUrls = {
-	'one': "bucket/bucketFull.png",
-	'many': "bucket/waterDropBucket.png",
-}
-
+class Achievement():
+    slots = ("active", "message", "css_class", "image")
+    def __init__(self, num_completed, num_total):
+        self.active = True
+        if num_completed == 1:
+            self.message = "<strong>Congratulations, you've crossed one thing off of your bucket list!</strong> It's just a drop in the bucket though; keep going out and doing more things!"
+            self.css_class = "alert-info"
+            self.image = "bucket/bucketFull.png"
+        elif num_completed == num_total:
+            self.message = "<strong>Congratulations, you've completed every item on your bucket list!</strong> Don't rest on your laurels though; add some more things to your list and keep going!"
+            self.css_class = "alert-success"
+            self.image = "bucket/waterDropBucket.png"
+        else:
+            self.active = False
 
 def index(request):
     return render_to_response("index.html", context_instance=RequestContext(request))
@@ -40,48 +34,31 @@ def user_profile(request, user_id=None):
     user_items = Item.objects.filter(user = user).order_by('completed_date')
     items_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True)
 
-    numTotal = len(user_items)
-    numCompleted = len(items_completed)
+    num_total = len(user_items)
+    num_completed = len(items_completed)
 
-    if numTotal == 0:
-      numTotal = 1
+    if num_total == 0:
+        num_total = 1
 
-    percentCompleted = ( numCompleted / numTotal ) * 100
-    percentUnCompleted = 100 -percentCompleted
+    percentCompleted = ( num_completed / num_total ) * 100
+    percentUnCompleted = 100 - percentCompleted
 
-    if numCompleted == 1:
-      achievement = True
-      achievementMsg = achievementMsgStrs['one']
-      achievementClass = achieveClassStrs['one']
-      achievementImg = achieveImageUrls['one']
-    elif numCompleted == numTotal:
-      achievement = True
-      achievementMsg = achievementMsg['many']
-      achievementClass = achieveClassStrs['many']
-      achievementImg = achieveImageUrls['many']
-    else:
-      achievement = False
-      achievementMsg = ""
-      achievementClass = ""
-      achievementImg = ""
+    achievement = Achievement(num_completed, num_total)
 
     user_tags = Tag.objects.filter(item__user=user)
 
-    return render_to_response("profile.html",
-      {
-        'userProfile': user.profile,
-        'email_hash': email_hash,
-        'user_items': user_items,
-        'items_completed': items_completed,
+    context = {
+        'userProfile'       : user.profile,
+        'email_hash'        : email_hash,
+        'user_items'        : user_items,
+        'items_completed'   : items_completed,
         'percentUnCompleted': percentUnCompleted,
-        'percentCompleted': percentCompleted,
-        'userTags': user_tags,
-        'achievement': achievement,
-        'achievementMsg': achievementMsg,
-        'achievementClass': achievementClass,
-        'achievementImg': achievementImg
-      }
-      , context_instance=RequestContext(request))
+        'percentCompleted'  : percentCompleted,
+        'userTags'          : user_tags,
+        'achievement'       : achievement,
+    }
+
+    return render_to_response("profile.html", context, context_instance=RequestContext(request))
 
 
 def my_profile(request):
