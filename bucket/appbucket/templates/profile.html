@@ -28,6 +28,9 @@
             </div>
             <div class="col-md-8">
                 <h1>{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
+                {% if user.id == profile_user.id %}
+                    <p><a class="btn btn-primary" href="{% url 'app:edit_profile' %}"><i class="fa fa-pencil-square-o"></i> Edit Profile</a>
+                {% endif %}
                 {% if profile_user.profile.gender %}<p>{{ profile_user.profile.gender }}</p>{% endif %}
                 {% if profile_user.profile.age and profile_user.profile.age != 0 %}<p>Age: {{ profile_user.profile.age }}</p>{% endif %}
                 {% if profile_user.profile.location %}
