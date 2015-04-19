@@ -24,3 +24,6 @@ body {
 	margin-left: 15px;
 }
 
+.checkbox label {
+  font-size: 15px;
+}
