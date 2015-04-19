@@ -76,3 +76,9 @@ function delete_item(id) {
         }
     })
 }
+
+function update_percent(percent) {
+    $("#percent-complete-display").html(percent);
+    $("#percent-complete-bar").css("width", percent + "%");
+    $("#percent-uncomplete-bar").css("width", 100 - percent + "%");
+}
