@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block jumbotron %}
+
+<div class="jumbotron">
+    <div class="container">
+      <h1>404</h1>
+      <div class="col-md-3" style="padding-bottom: 5px;">
+                {% load staticfiles %}
+                <img src="{% static "bucket/404 bucket.png" %}" class="img-responsive" style="text-align: left"/>
+            </div>
+      <p>I'm sorry, but this page does not appear to exist. "Not all who wander are lost" in the words of J.R.R. Tolkien, but I'm afraid you are. Please try to enter a new bucketeer url.
+      </p>
+  </div>
+</div>
+{% block content %}
+{% endblock content %}
+{% endblock jumbotron %}

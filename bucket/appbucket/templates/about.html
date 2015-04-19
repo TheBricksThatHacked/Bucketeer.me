@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block jumbotron %}
-{% csrf_token %}
 <div class="jumbotron">
     <div class="container">
       <h1>About Bucketeer</h1>
@@ -12,7 +11,7 @@
       <p>Bucketeer is an online application that lets you record and track things that are on your bucketlist. Bucketeer allows you to view the aspirations and achievements of your friends while also congratulating you for completing goals of your own.
       </p>
       <p></p>
-      <p>Bucketeer was created during RIT's <a href ="https://brickhack.io/" target="_blank">2015 BrickHack</a> by the team "The Bricks that Hacked". You can view the source code for Bucketeer.me here on <a href="https://github.com/TheBricksThatHacked/DjangoAPI" target="_blank"><i class="fa fa-github"></i>Github</a>. The Bricks that Hacked is comprised of: </p> 
+      <p>Bucketeer was created during RIT's <a href ="https://brickhack.io/" target="_blank">2015 BrickHack</a> by the team "The Bricks that Hacked." You can view the source code for Bucketeer.me here on <a href="https://github.com/TheBricksThatHacked/DjangoAPI" target="_blank"><i class="fa fa-github"></i>Github</a>. The Bricks that Hacked is comprised of: </p> 
 </div>
 </div>
         </div>
@@ -24,7 +23,7 @@
 {% block content %}
 <div class="row">
             <div class="col-md-4">
-                {% load staticfiles %}
+                
                 <img src="{% static "bucket/corban photo.jpg" %}" class="img-responsive img-circle img-thumbnail"/>
             </div>
             <div class="col-md-8" style="padding-bottom: 5px;">
@@ -35,18 +34,18 @@
           </div>
   <div class="row">
               <div class="col-md-4">
-                {% load staticfiles %}
+           
                 <img src="{% static "bucket/adam photo.jpg" %}" class="img-responsive img-circle img-thumbnail" style="padding-bottom: 5px;"/>
             </div>
             <div class="col-md-8" style="padding-bottom: 5px;">
-                <h1>Adam McCarthy</h1>
+                <h1><a href="https://github.com/aem1269">Adam McCarthy</a></h1>
                 <p> Adam McCarthy is a third year Software Engineering major at RIT originally from Ogdensburg, NY. Adam will be interning at <a href="http://www.ricoh-usa.com/" target="_blank">Ricoh</a> over the summer, and he has playing committing to the Linux kernel, seeing Daftpunk in concert, and writing a paper with Paul Erdös on his bucket list.
                 </p>
               </div>
               </div>
 <div class="row">
               <div class="col-md-4">
-              {% load staticfiles %}
+              
               <img src="{% static "bucket/val photo.jpg" %}" class="img-responsive img-circle img-thumbnail" style="padding-bottom: 5px;"/>
             </div>
             <div class="col-md-8" style="padding-bottom: 5px;">
@@ -58,7 +57,7 @@
               
 <div class="row">
               <div class="col-md-4" style="padding-bottom: 5px;">
-              {% load staticfiles %}
+             
               <img src="{% static "bucket/zach photo.jpg" %}" class="img-responsive img-circle img-thumbnail" style="padding-bottom: 5px;"/>
             </div>
             <div class="col-md-8">

@@ -11,3 +11,4 @@ urlpatterns = patterns('',
     url(r'^item/edit/(?P<item_id>\d+)/$', 'appbucket.views.edit_item', name='edit_item'),
     
 )
+
