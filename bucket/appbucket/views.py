@@ -28,13 +28,13 @@ def index(request):
     return render_to_response("index.html", context_instance=RequestContext(request))
 
 def user_profile(request, user_id=None):
-    user = User.objects.get(id=user_id)
+    profile_user = User.objects.get(id=user_id)
 
-    enc_email = user.email.strip().lower().encode("utf-8")
+    enc_email = profile_user.email.strip().lower().encode("utf-8")
     email_hash = hashlib.md5(enc_email).hexdigest()
 
-    user_items = Item.objects.filter(user = user).order_by('completed_date')
-    items_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True)
+    user_items = Item.objects.filter(user = profile_user).order_by('completed_date')
+    items_completed = Item.objects.filter(user = profile_user).exclude(completed_date__isnull=True)
 
     num_total = len(user_items)
     num_completed = len(items_completed)
@@ -47,9 +47,10 @@ def user_profile(request, user_id=None):
 
     achievement = Achievement(num_completed, num_total)
 
-    user_tags = Tag.objects.filter(item__user=user).annotate(itemcount=Count('id')).order_by('-itemcount')
+    user_tags = Tag.objects.filter(item__user=profile_user).annotate(itemcount=Count('id')).order_by('-itemcount')
 
     context = {
+        'profile_user'        : profile_user,
         'email_hash'          : email_hash,
         'user_items'          : user_items,
         'items_completed'     : items_completed,

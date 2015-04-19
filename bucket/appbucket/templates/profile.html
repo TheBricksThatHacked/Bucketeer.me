@@ -27,11 +27,11 @@
                 <img src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=300" class="img-responsive img-circle img-thumbnail" />
             </div>
             <div class="col-md-8">
-                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-                {% if user.profile.gender %}<p>{{ user.profile.gender }}</p>{% endif %}
-                {% if user.profile.age and user.profile.age != 0 %}<p>Age: {{ user.profile.age }}</p>{% endif %}
-                {% if user.profile.location %}
-                    <p><i class="fa fa-map-marker"></i> {{ user.profile.location }}</p>
+                <h1>{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
+                {% if profile_user.profile.gender %}<p>{{ profile_user.profile.gender }}</p>{% endif %}
+                {% if profile_user.profile.age and profile_user.profile.age != 0 %}<p>Age: {{ profile_user.profile.age }}</p>{% endif %}
+                {% if profile_user.profile.location %}
+                    <p><i class="fa fa-map-marker"></i> {{ profile_user.profile.location }}</p>
                 {% endif %}
                 <p>
                     <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
@@ -44,7 +44,7 @@
                     <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
                     <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
                 </p>
-                <p>{{ user.profile.bio }}</p>
+                <p>{{ profile_user.profile.bio }}</p>
 
                 <p><i class="fa fa-check-circle-o"></i> <span id="items-complete">{{ items_completed|length }}</span> Items completed</p>
                 <p><i class="fa fa-circle-o"></i> <span id="items-total">{{ user_items|length }}</span> Items total</p>
