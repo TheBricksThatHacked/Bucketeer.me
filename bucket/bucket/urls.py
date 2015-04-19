@@ -9,8 +9,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'bucket.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^', include(appbucket_urls, namespace="app")),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^bucket/', include(appbucket_urls, namespace="app")),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^register/$', 'bucket.views.register', name='register'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
