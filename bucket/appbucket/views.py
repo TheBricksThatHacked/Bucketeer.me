@@ -15,7 +15,7 @@ def my_profile(request):
 
 
 def edit_profile(request, user_id=None):
-    return render_to_response("editProfile.html", context_instance=RequestContext(request))
+    return render_to_response("edit_profile.html", context_instance=RequestContext(request))
 
 # Create a bucket list item
 def add_item(request):
