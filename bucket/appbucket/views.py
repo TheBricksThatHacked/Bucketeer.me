@@ -22,7 +22,7 @@ class Achievement():
             self.message = "<strong>Congratulations, you've completed every item on your bucket list!</strong> Don't rest on your laurels though; add some more things to your list and keep going!"
             self.css_class = "alert-success"
             self.image = "bucket/bucketFull.png"
-        elif achievement == "bday":1
+        elif achievement == "bday":
             self.message = "<strong>Congratulations, it's the anniversary of when you registered!</strong> Celebrate your bucket day by doing more exciting things!"
             self.css_class = "alert-success"
             self.image = "bucket/birthdayBucket.png"
