@@ -1,7 +1,8 @@
 from .models import *
 from .forms import *
 from datetime import datetime
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.http import HttpResponseForbidden
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -119,5 +120,26 @@ def add_item(request):
     context = {
         "form"        : item_form,
         "add_success" : add_success,
+    }
+    return render_to_response('add_item.html', context, context_instance=RequestContext(request))
+
+@login_required
+def edit_item(request, item_id=None):
+    i = get_object_or_404(Item, pk=item_id)
+    if (i.user.id != request.user.id):
+        return HttpResponseForbidden("You do not have access to that item")
+    item_form = None
+    if request.method == "POST":
+        item_form = ItemForm(request.POST, instance=i)
+        if item_form.is_valid():
+            i = item_form.save(commit=False)
+            i.save()
+            item_form.save_m2m()
+            return redirect("app:my_profile")
+    else:
+        item_form = ItemForm(instance=i)
+
+    context = {
+        "form" : item_form,
     }
     return render_to_response('add_item.html', context, context_instance=RequestContext(request))
