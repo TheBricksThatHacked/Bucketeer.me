@@ -74,21 +74,31 @@
         </ul>
     </div>
     <div class="col-md-9 border-left">
-        <h2><i class="fa fa-paper-plane-o"></i> List <a href="/addItem" class="btn btn-success btn-sm add-item"><i class="fa fa-plus"></i> Add to List</a></h2>
+        <h2>
+            <i class="fa fa-paper-plane-o"></i> List
+            {% if user.id == profile_user.id %}
+                <a href="/addItem" class="btn btn-success btn-sm add-item"><i class="fa fa-plus"></i> Add to List</a>
+            {% endif %}
+        </h2>
         <ul class="list-unstyled items">
 
-            {% for item in user_items %} {% if item.completed_date %}
-            <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o check-item"></i> {{ item.title }}
-                <p>{{ item.description }}</p>
-                <i class="fa fa-times delete-item"></i>
-            </li>
-            {% else %}
-            <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-circle-o check-item"></i> {{ item.title }}
-                <p>{{ item.description }}</p>
-                <i class="fa fa-times delete-item"></i>
-            </li>
-            {% endif %} {% empty %}
-            <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
+            {% for item in user_items %}
+                {% if item.completed_date %}
+                    <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o check-item"></i> {{ item.title }}
+                        <p>{{ item.description }}</p>
+                        <i class="fa fa-times delete-item"></i>
+                    </li>
+                {% else %}
+                    <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-circle-o check-item"></i> {{ item.title }}
+                        <p>{{ item.description }}</p>
+                        <i class="fa fa-times delete-item"></i>
+                    </li>
+                {% endif %}
+
+            {% empty %}
+                {% if user.id == profile_user.id %}
+                    <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
+                {% endif %}
 
             {% endfor %}
         </ul>
