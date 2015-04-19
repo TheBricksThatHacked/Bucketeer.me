@@ -169,6 +169,9 @@ def add_item(request):
                 i.completed_date = datetime.now()
             i.save()
             item_form.save_m2m()
+
+            # Create a new form.
+            item_form = ItemForm()
             add_success = True
     else:
         item_form = ItemForm()
