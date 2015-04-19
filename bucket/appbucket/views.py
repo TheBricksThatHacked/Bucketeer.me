@@ -9,6 +9,9 @@ def index(request):
 def user_profile(request, user_id=None):
     return render_to_response("profile.html", context_instance=RequestContext(request))
 
+def my_profile(request):
+    return user_profile(request, user_id=request.user.id)
+
 
 def edit_profile(request, user_id=None):
     return render_to_response("editProfile.html", context_instance=RequestContext(request))

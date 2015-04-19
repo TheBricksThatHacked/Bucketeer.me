@@ -99,3 +99,4 @@ TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
     'appbucket.context_processors.include_login_form',
 )
 
+LOGIN_REDIRECT_URL = "/profile/"
