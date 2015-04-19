@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        {% if register_failed %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>Oh snap!</strong> ERRORS!!!!
+        </div>
+        {% endif %}
+        <div class="well form-well">
+            <form method="post" {% if form.is_multipart %}enctype='multipart/form-data'{% endif %}>
+                {% csrf_token %}
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                {% endif %}
+                <fieldset>
+                    <legend>Add New Item</legend>
+                    
+                    <div class="form-group">
+                        <label for="inputEmail" class=" control-label">Title</label>
+                        <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square"></i></span>
+                            <input type="text" name="titleName" class="form-control" id="titleName">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputLocation" class="control-label">Description</label>
+                        <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                            <textarea name="itemDesc" class="form-control" id="itemDesc" rows= "3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEmail" class=" control-label">Tags</label>
+                        <div class="input-group"><span class="input-group-addon"><i class="fa fa-tags"></i></span>
+                            <input type="text" name="itemName" class="form-control" id="itemName">
+                        </div>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="inputLocation" class="control-label">Item Status <i class="fa fa-check-circle-o"></i></label>
+                        <br/>
+                        <form action="">
+                            <input type="checkbox" name="complete" value="complete">Complete<br>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

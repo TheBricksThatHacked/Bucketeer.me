@@ -12,3 +12,6 @@ def user_profile(request, user_id=None):
 
 def edit_profile(request, user_id=None):
     return render_to_response("editProfile.html", context_instance=RequestContext(request))
+
+def add_item(request, user_id=None):
+    return render_to_response("addItem.html", context_instance=RequestContext(request))
