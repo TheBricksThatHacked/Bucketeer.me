@@ -98,7 +98,7 @@ def get_badges(user):
     # Top 10%
 
     # 50-50
-    if (num_completed == int(num_items / 2)):
+    if (num_items > 0) and (num_completed == (num_items / 2)):
         badges.append('<span class="label label-info label-lg"><i class="fa fa-adjust"></i> 50-50</span>')
 
     # X Year Club
