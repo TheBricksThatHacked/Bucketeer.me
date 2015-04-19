@@ -16,10 +16,10 @@ $(document).ready(function () {
     var itemId = $(this).parent().data('id');
     console.log("Delete Item: " + itemId)
   });
-  
-  $(".checkbox").click(function() {
-    var itemId = $(this).parent().data('id');
-    check(parseInt(itemId));
+
+  $(document).on('click', '.check-item', function() {
+    var itemId = parseInt($(this).parent().data('id'));
+    check(itemId);
   })
 
 });
@@ -35,9 +35,9 @@ function check(id) {
     data: data,
     success: function(response) {
       if (response.checked) {
-        $("#item-" + id).removeClass("fa-circle-o").addClass("fa-check-circle-o");
+        $(".item[data-id='" + id+"'] .check-item").removeClass("fa-circle-o").addClass("fa-check-circle-o");
       } else {
-        $("#item-" + id).removeClass("fa-check-circle-o").addClass("fa-circle-o");
+        $(".item[data-id='" + id+"'] .check-item").removeClass("fa-check-circle-o").addClass("fa-circle-o");
       }
     }, error: function(jqXHR) {
       console.log("An ajax error occurred");

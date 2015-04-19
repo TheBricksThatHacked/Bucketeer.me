@@ -55,3 +55,7 @@ body {
   opacity: 1;
   cursor: pointer;
 }
+
+.check-item {
+  cursor: pointer;
+}

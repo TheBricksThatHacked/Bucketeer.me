@@ -79,11 +79,12 @@
         <ul class="list-unstyled items">
 
             {% for item in user_items %} {% if item.completed_date %}
-            <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o checkbox"></i> {{ item.title }}
+            <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o check-item"></i> {{ item.title }}
                 <p>{{ item.description }}</p>
+                <i class="fa fa-times delete-item"></i>
             </li>
             {% else %}
-            <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-circle-o checkbox"></i> {{ item.title }}
+            <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-circle-o check-item"></i> {{ item.title }}
                 <p>{{ item.description }}</p>
                 <i class="fa fa-times delete-item"></i>
             </li>
