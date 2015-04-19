@@ -6,11 +6,11 @@ from taggit.managers import TaggableManager
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     created_date = models.DateTimeField(default=datetime.now)
     completed_date = models.DateTimeField(blank=True, null=True)
     user = models.ForeignKey(User)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.title

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="well form-well">
+            {% if add_success %}
+            <div class="alert alert-success">
+                <p>
+                    <strong>Item added successfully.</strong> <a href="{% url "app:my_profile" %}">View your profile.</a>
+                </p>
+            </div>
+            {% endif %}
+            <form method="post" {% if form.is_multipart %}enctype='multipart/form-data'{% endif %}>
+                {% csrf_token %}
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}" />
+                {% endif %}
+                <fieldset>
+                    <legend>Add New Item</legend>
+
+                    <div class="form-group {% if form.title.errors %}has-error{% endif %}">
+                        <label for="item-title" class=" control-label">Title</label>
+                        <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square"></i></span>
+                            <input type="text" name="title" class="form-control" id="item-title"
+                                value="{% if form.title.value %}{{ form.title.value }}{% endif %}">
+                        </div>
+                        {% for error in form.title.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group {% if form.description.errors %}has-error{% endif %}">
+                        <label for="item-description" class="control-label">Description</label>
+                        <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+                            <textarea name="description" class="form-control" id="item-description" rows= "3">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                        </div>
+                        {% for error in form.description.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group {% if form.tags.errors %}has-error{% endif %}">
+                        <label for="item-tags" class=" control-label">Tags</label>
+                        <div class="input-group"><span class="input-group-addon"><i class="fa fa-tags"></i></span>
+                            <input type="text" name="tags" class="form-control" id="item-tags"
+                                value="{% if form.tags.value %}{{ form.tags.value }}{% endif %}">
+                        </div>
+                        {% for error in form.tags.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inputLocation" class="control-label">Item Status <i class="fa fa-check-circle-o"></i></label>
+                            <div class="checkbox">
+                                <label for="complete">
+                                    <input type="checkbox" name="complete" 
+                                        value="{% if form.complete.value %}{{ form.complete.value }}{% endif %}" />
+                                    Complete
+                                </label>
+                            </div>
+                        </div>
+                        {% for error in form.complete.errors %}
+                        <div class="alert alert-danger">
+                            <p>{{ error }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

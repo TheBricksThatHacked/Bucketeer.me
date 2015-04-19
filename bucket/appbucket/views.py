@@ -61,7 +61,7 @@ def user_profile(request, user_id=None):
 
     return render_to_response("profile.html", context, context_instance=RequestContext(request))
 
-
+@login_required
 def my_profile(request):
     return user_profile(request, user_id=request.user.id)
 
@@ -98,8 +98,11 @@ def edit_profile(request):
     return render_to_response("edit_profile.html", context, context_instance=RequestContext(request))
 
 # Create a bucket list item
+@login_required
 def add_item(request):
     item_form = None
+    add_success = False
+
     if request.method == "POST":
         item_form = ItemForm(request.POST)
         if item_form.is_valid():
@@ -109,12 +112,12 @@ def add_item(request):
                 i.completed_date = datetime.now()
             i.save()
             item_form.save_m2m()
-        else:
-            print("FORM NOT VALID EVERYONE PANIC")
+            add_success = True
     else:
         item_form = ItemForm()
     # TODO process tags
     context = {
-        "item_form": item_form
+        "form"        : item_form,
+        "add_success" : add_success,
     }
-    return render_to_response('addItem.html', context, context_instance=RequestContext(request))
+    return render_to_response('add_item.html', context, context_instance=RequestContext(request))

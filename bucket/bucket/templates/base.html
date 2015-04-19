@@ -37,12 +37,12 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" href="/">Bucketeer</a>
+                <a class="navbar-brand" href="{% url "app:index" %}">Bucketeer</a>
 
             </div>
             <div class="navbar-collapse collapse">
                 {% if not user.is_authenticated %}
-                <form class="navbar-form navbar-right" method="post" action="/login/" role="form">
+                <form class="navbar-form navbar-right" method="post" action="{% url "login" %}" role="form">
                     {% csrf_token %}
 
                     <div class="form-group">
@@ -52,12 +52,12 @@
                         <input type="password" name="password" placeholder="Password" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-success">Sign in</button>
-                    <a href="/register" type="submit" class="btn btn-info">Register</a>
+                    <a href="{% url "register" %}" type="submit" class="btn btn-info">Register</a>
                 </form>
                 {% else %}
                     <div class="navbar-right logged-in-btns">
-                        <a href="/profile" class="btn btn-success">Profile</a>
-                        <a href="/logout" class="btn btn-info">Logout</a>
+                        <a href="{% url "app:my_profile" %}" class="btn btn-success">Profile</a>
+                        <a href="{% url "logout" %}" class="btn btn-info">Logout</a>
                     </div>
                 {% endif %}
 
