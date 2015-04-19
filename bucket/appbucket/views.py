@@ -6,6 +6,27 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.template import RequestContext
 import hashlib
 
+#Actual messages the achievements display
+achieveMsgs = {
+	'one' : """<br>Congratulations, you've crossed one thing off of your bucket list!
+	It's just a drop in the bucket though; keep going out and doing more things!<br><br><br>""",
+	'all': """<br>Congratulations, you've completed every item on your bucket list!
+	Don't rest on your laurels though; add some more things to your list and keep going!<br><br><br>""",
+}
+
+#Achievement class strings
+achieveClassStrs = {
+	'one' : "alert alert-success alert-info",
+	'many' : "alert alert-success alert-dismissable",
+}
+
+#Achievement image urls. 
+achieveImageUrls = {
+	'one': "{% static \"bucket/bucketFull.png\" %}",
+	'many': "{% static \"bucket/waterDropBucket.png\" %}",
+}
+
+
 def index(request):
     return render_to_response("index.html", context_instance=RequestContext(request))
 

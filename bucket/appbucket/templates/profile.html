@@ -3,6 +3,17 @@
 {% block jumbotron %}
 <div class="jumbotron">
   <div class="container">
+    <div class="alert alert-success alert-dismissable" vertical-align = "middle">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    {% load staticfiles %}
+    <p><img src="{% static "bucket/bucketFull.png" %}" class="img-responsive" style="float: left; PADDING-RIGHT: 10px"/><br>Congratulations, you've completed every item on your bucket list! Don't rest on your laurels though; add some more things to your list and keep going!<br><br><br></p>
+    </div>
+
+    <div class="alert alert-success alert-info" vertical-align = "middle">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    {% load staticfiles %}
+    <p><img src="{% static "bucket/waterDropBucket.png" %}" class="img-responsive" style="float: left; PADDING-RIGHT: 10px"/><br>Congratulations, you've crossed one thing off of your bucket list! It's just a drop in the bucket though; keep going out and doing more things!<br><br><br></p>
+    </div>
     <div class="row">
       <div class="col-md-4">
         <img src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=300" class="img-responsive img-circle img-thumbnail" />
