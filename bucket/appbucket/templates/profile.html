@@ -28,13 +28,12 @@
         </p>
         <p>{{ user.get_profile.bio }}</p>
 
-        <p><i class="fa fa-check-circle-o"></i> 9001 Items completed</p>
-        <p><i class="fa fa-circle-o"></i> 9009 Items</p>
-        <p><i class="fa fa-bar-chart"></i> 99% Complete</p>
+        <p><i class="fa fa-check-circle-o"></i> {{ items_completed|length }} Items completed</p>
+        <p><i class="fa fa-circle-o"></i> {{ user_items|length }} Items total</p>
+        <p><i class="fa fa-bar-chart"></i> {{ percentCompleted }}% Complete</p>
         <div class="progress">
-          <div class="progress-bar progress-bar-success" style="width: 35%"></div>
-          <div class="progress-bar progress-bar-warning" style="width: 20%"></div>
-          <div class="progress-bar progress-bar-danger" style="width: 10%"></div>
+          <div class="progress-bar progress-bar-success" style="width: {{percentCompleted}}%"></div>
+          <div class="progress-bar progress-bar-danger" style="width: {{percentUnCompleted}}%"></div>
         </div>
       </div>
     </div>
@@ -47,6 +46,9 @@
   <div class="col-md-3 ">
     <h2><i class="fa fa-tags"></i> Tags</h2>
     <ul class="list-group">
+    <li class="list-group-item">
+        <span class="badge">14</span> All
+      </li>
       <li class="list-group-item">
         <span class="badge">14</span> Travel
       </li>
@@ -59,25 +61,14 @@
     </ul>
   </div>
   <div class="col-md-9 border-left">
-    <h2><i class="fa fa-paper-plane-o"></i> List <a href="/addItem" class="btn btn-success btn-sm add-item"><i class="fa fa-plus-square-o"></i> Add to List</a></h2>
+    <h2><i class="fa fa-paper-plane-o"></i> List <a href="/addItem" class="btn btn-success btn-sm add-item"><i class="fa fa-plus"></i> Add to List</a></h2>
     <ul class="list-unstyled">
-      <li><i class="fa fa-circle-o"></i> Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT </li>
-      <li><i class="fa fa-circle-o"></i> Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT </li>
-      <li><i class="fa fa-circle-o"></i> Win CodeRIT</li>
-      <li><i class="fa fa-circle-o"></i> Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT </li>
-      <li><i class="fa fa-circle-o"></i> Win CodeRIT</li>
-      <li><i class="fa fa-circle-o"></i> Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT </li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT</li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT </li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT </li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT</li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT </li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT</li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT</li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT Win CodeRIT Win CodeRIT Win CodeRIT </li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT</li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT</li>
-      <li><i class="fa fa-check-circle-o"></i> Win CodeRIT</li>
+      {% for item in user_items %}
+        <li><i class="fa fa-circle-o"></i> {{item.title}} <p>{{item.description}}</p></li>
+        <li><i class="fa fa-check-circle-o"></i> {{item.title}} <p>{{item.description}}</p></li>
+      {% empty %}
+        <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
+      {% endfor %}
     </ul>
   </div>
 </div>
