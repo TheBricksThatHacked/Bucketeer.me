@@ -12,8 +12,9 @@ urlpatterns = patterns('',
 
     url(r'^', include(appbucket_urls, namespace="app")),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^logout/$', 'bucket.views.logout', name='logout'),
     url(r'^register/$', 'bucket.views.register', name='register'),
+    url(r'^', include('django.contrib.auth.urls')),
     url(r'^ajax/', include(ajax_urls, namespace="ajax")),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

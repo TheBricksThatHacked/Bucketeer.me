@@ -29,13 +29,13 @@ def index(request):
     return render_to_response("index.html", context_instance=RequestContext(request))
 
 def user_profile(request, user_id=None):
-    user = User.objects.get(id=user_id)
+    profile_user = User.objects.get(id=user_id)
 
-    enc_email = user.email.strip().lower().encode("utf-8")
+    enc_email = profile_user.email.strip().lower().encode("utf-8")
     email_hash = hashlib.md5(enc_email).hexdigest()
 
-    user_items = Item.objects.filter(user = user).order_by('completed_date')
-    items_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True)
+    user_items = Item.objects.filter(user = profile_user).order_by('completed_date')
+    items_completed = Item.objects.filter(user = profile_user).exclude(completed_date__isnull=True)
 
     num_total = len(user_items)
     num_completed = len(items_completed)
@@ -48,9 +48,10 @@ def user_profile(request, user_id=None):
 
     achievement = Achievement(num_completed, num_total)
 
-    user_tags = Tag.objects.filter(item__user=user).annotate(itemcount=Count('id')).order_by('-itemcount')
+    user_tags = Tag.objects.filter(item__user=profile_user).annotate(itemcount=Count('id')).order_by('-itemcount')
 
     context = {
+        'profile_user'        : profile_user,
         'email_hash'          : email_hash,
         'user_items'          : user_items,
         'items_completed'     : items_completed,
@@ -58,9 +59,64 @@ def user_profile(request, user_id=None):
         'percent_completed'   : percentCompleted,
         'user_tags'           : user_tags,
         'achievement'         : achievement,
+        'badges'              : get_badges(profile_user),
     }
 
     return render_to_response("profile.html", context, context_instance=RequestContext(request))
+
+def get_badges(user):
+    badges = []
+
+    num_items = Item.objects.filter(user = user).count()
+    num_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True).count()
+
+    # World Traveler 
+    #if Item.objects.filter(user = user).exclude(completed_date__isnull=True).tags.filter(tags__name__in = ["travel"]).count() >= 5:
+    #    pass
+    #badges.append('<span class="label label-success label-lg"><i class="fa fa-trophy"></i> World Traveler</span>')
+
+    # Completionist
+    if (num_items >= 10) and (num_completed == num_items):
+        badges.append('<span class="label label-info label-lg"><i class="fa fa-bar-chart"></i> Completionist</span>')
+
+    # Newbie
+    if (num_items < 3):
+        badges.append('<span class="label label-success label-lg"><i class="fa fa-child"></i> Newbie</span>')
+
+    # Intermediate
+    if (num_items >= 3) and (num_items <= 25):
+        badges.append('<span class="label label-warning label-lg"><i class="fa fa-graduation-cap"></i> Intermediate</span>')
+
+    # Hardcore
+    if (num_items > 25):
+        badges.append('<span class="label label-danger label-lg"><i class="fa fa-diamond"></i> Hardcore</span>')
+
+    # Big Bucket
+    if (num_items > 50) and (num_completed > (num_items / 2)):
+        badges.append('<span class="label label-danger label-lg"><i class="fa fa-bitbucket"></i> Big Bucket</span>')
+
+    # Top 10%
+
+    # 50-50
+    if (num_completed == int(num_items / 2)):
+        badges.append('<span class="label label-info label-lg"><i class="fa fa-adjust"></i> 50-50</span>')
+
+    # X Year Club
+    years_passed = ((datetime.now() - User.objects.filter(id = user.id).datetimes("date_joined", "hour")[0]).days // 365)
+    if (years_passed) > 1:
+    #    years_passed club
+        badges.append('<span class="label label-default label-lg"><i class="fa fa-trophy"></i> {0} Year Club</span>'.format(years_passed))
+
+    # Dreamer
+    if (num_items > 10) and (num_completed / num_items) < 0.1:
+        badges.append('<span class="label label-default label-lg"><i class="fa fa-bed"></i> Dreamer</span>')
+
+    # Bucket Day
+    if (User.objects.filter(id = user.id).datetimes("date_joined", "day")[0].replace(year=2000).date()) == datetime.now().replace(year=2000).date():
+        badges.append('<span class="label label-info label-lg"><i class="fa fa-birthday-cake"></i> Bucket Day</span>')
+
+    return badges
+
 
 @login_required
 def my_profile(request):
