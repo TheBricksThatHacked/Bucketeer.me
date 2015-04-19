@@ -84,11 +84,13 @@
             {% for item in user_items %}
                 {% if item.completed_date %}
                     <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o check-item"></i> {{ item.title }}
+                        <a href="{% url 'app:edit_item' item.id %}"><i class="fa fa-pencil edit-item"></i></a>
                         <p>{{ item.description }}</p>
                         <i class="fa fa-times delete-item"></i>
                     </li>
                 {% else %}
                     <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-circle-o check-item"></i> {{ item.title }}
+                        <a href="{% url 'app:edit_item' item.id %}"><i class="fa fa-pencil edit-item"></i></a>
                         <p>{{ item.description }}</p>
                         <i class="fa fa-times delete-item"></i>
                     </li>
