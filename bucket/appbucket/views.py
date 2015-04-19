@@ -1,5 +1,6 @@
 from .models import *
 from .forms import *
+from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.forms import AuthenticationForm
 from django.template import RequestContext
@@ -36,7 +37,11 @@ def add_item(request):
         if item_form.is_valid():
             i = item_form.save(commit=False)
             i.user = request.user
+            if 'complete' in request.POST:
+                i.completed_date = datetime.now()
             i.save()
+        else:
+            print("FORM NOT VALID EVERYONE PANIC")
     else:
         item_form = ItemForm()
     # TODO process tags
