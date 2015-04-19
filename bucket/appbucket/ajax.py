@@ -4,7 +4,7 @@ from django.conf.urls import patterns, include, url
 from django.http import HttpResponseBadRequest, HttpResponseForbidden, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
-def checkoff(request):
+def check(request): # or uncheck
     if (request.method != "POST"):
         return HttpResponseBadRequest("/ajax/checkoff must be accessed using POST")
     response = {
@@ -16,11 +16,16 @@ def checkoff(request):
     if (item.user.id != request.user.id):
         return HttpResponseForbidden("You do not have access to that item")
     # passed the gauntlet, modify things
-    item.completed_date = datetime.now()
+    if (item.completed_date):
+        #uncheck it
+        item.completed_date = None
+    else:
+        item.completed_date = datetime.now()
     item.save()
-    response["checked"] = True
+    response["checked"] = item.completed_date is not None
+    response["success"] = True
     return JsonResponse(response)
 
 urlpatterns = patterns("",
-    url(r'^checkoff/$', checkoff, name="checkoff"),
+    url(r'^check/$', check, name="check"),
 )
