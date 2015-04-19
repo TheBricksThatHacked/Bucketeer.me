@@ -1,89 +1,97 @@
 {% extends "base.html" %}
 
 {% block jumbotron %}
+{% csrf_token %}
 <div class="jumbotron">
-  <div class="container">
+    <div class="container">
+        {% if achievement.active %}
+            <div class="alert alert-dismissable {{ achievement.css_class }}">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                {% load staticfiles %}
 
-    {% if achievement %}
-      <div class="{{achievementClass}}" vertical-align = "middle">
-      <a href="#" class="close" data-dismiss="alert">&times;</a>
-      {% load staticfiles %}
-      <p>
-        <img src="{% static achievementImg %}" class="img-responsive achievement-image" />
-        {{achievementMsg|safe}}
-      </p>
-      </div>
-    {% endif %}
+                <div class="media">
+                    <div class="media-left">
+                        <img class="media-object" src="{% static achievement.image %}" width="70px">
+                    </div>
+                    <div class="media-body">
+                        <p>
+                            {{ achievement.message|safe }}
+                        </p>
+                    </div>
+                </div>
 
-    <div class="row">
-      <div class="col-md-4">
-        <img src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=300" class="img-responsive img-circle img-thumbnail" />
-      </div>
-      <div class="col-md-8">
-        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-        {% if userProfile.gender or userProfile.age %}
-          <p>{{ userProfile.gender }} {{ userProfile.age }}</p>
+            </div>
         {% endif %}
-        {% if userProfile.location %}
-          <p><i class="fa fa-map-marker"></i> {{ userProfile.location }}</p>
-        {% endif %}
-        <p>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-          <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
-        </p>
-        <p>{{ user.get_profile.bio }}</p>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=300" class="img-responsive img-circle img-thumbnail" />
+            </div>
+            <div class="col-md-8">
+                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                {% if userProfile.gender or userProfile.age %}
+                    <p>{{ userProfile.gender }} {{ userProfile.age }}</p>
+                {% endif %}
+                {% if userProfile.location %}
+                    <p><i class="fa fa-map-marker"></i> {{ userProfile.location }}</p>
+                {% endif %}
+                <p>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                    <span class="label label-info label-lg"><i class="fa fa-trophy"></i> World Traveler</span>
+                </p>
+                <p>{{ user.get_profile.bio }}</p>
 
-        <p><i class="fa fa-check-circle-o"></i> {{ items_completed|length }} Items completed</p>
-        <p><i class="fa fa-circle-o"></i> {{ user_items|length }} Items total</p>
-        <p><i class="fa fa-bar-chart"></i> {{ percentCompleted }}% Complete</p>
-        <div class="progress">
-          <div class="progress-bar progress-bar-success" style="width: {{percentCompleted}}%"></div>
-          <div class="progress-bar progress-bar-danger" style="width: {{percentUnCompleted}}%"></div>
+                <p><i class="fa fa-check-circle-o"></i> {{ items_completed|length }} Items completed</p>
+                <p><i class="fa fa-circle-o"></i> {{ user_items|length }} Items total</p>
+                <p><i class="fa fa-bar-chart"></i> {{ percentCompleted }}% Complete</p>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width: {{percentCompleted}}%"></div>
+                    <div class="progress-bar progress-bar-danger" style="width: {{percentUnCompleted}}%"></div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 {% endblock jumbotron %}
 
 {% block content %}
 <div class="row">
-  <div class="col-md-3 ">
-    <h2><i class="fa fa-tags"></i> Tags</h2>
-    <ul class="list-group">
-    <li data-tag-selector="all" class="list-group-item tag">
-          All
-        </li>
-      {% for tag in userTags %}
-        <li data-tag-selector="{{ tag }}" class="list-group-item tag">
-          <span class="badge">{{ tag.itemcount }}</span> {{ tag }}
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="col-md-9 border-left">
-    <h2><i class="fa fa-paper-plane-o"></i> List <a href="/addItem" class="btn btn-success btn-sm add-item"><i class="fa fa-plus"></i> Add to List</a></h2>
-    <ul class="list-unstyled items">
+    <div class="col-md-3 ">
+        <h2><i class="fa fa-tags"></i> Tags</h2>
+        <ul class="list-group">
+            <li data-tag-selector="all" class="list-group-item tag">
+                All
+            </li>
+            {% for tag in userTags %}
+            <li data-tag-selector="{{ tag }}" class="list-group-item tag">
+                <span class="badge">{{ tag.itemcount }}</span> {{ tag }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-9 border-left">
+        <h2><i class="fa fa-paper-plane-o"></i> List <a href="/addItem" class="btn btn-success btn-sm add-item"><i class="fa fa-plus"></i> Add to List</a></h2>
+        <ul class="list-unstyled items">
 
-      {% for item in user_items %}
-        {% if item.completed_date %}
-          <li class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o"></i> {{ item.title }} <p>{{ item.description }}</p></li>
-        {% else %}
-          <li class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-circle-o"></i> {{ item.title }} <p>{{ item.description }}</p></li>
-        {% endif %}
-      {% empty %}
-        <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
-      {% endfor %}
-    </ul>
-  </div>
+            {% for item in user_items %} {% if item.completed_date %}
+            <li class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o"></i> {{ item.title }}
+                <p>{{ item.description }}</p>
+            </li>
+            {% else %}
+            <li class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-circle-o"></i> {{ item.title }}
+                <p>{{ item.description }}</p>
+            </li>
+            {% endif %} {% empty %}
+            <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
-
 {% endblock content %}
 

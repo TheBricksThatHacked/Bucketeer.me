@@ -3,6 +3,7 @@ from django.contrib import admin
 from appbucket.urls import urlpatterns as appbucket_urls
 from django.conf import settings
 from django.conf.urls.static import static
+from appbucket.ajax import urlpatterns as ajax_urls
 
 urlpatterns = patterns('',
     # Examples:
@@ -13,5 +14,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^register/$', 'bucket.views.register', name='register'),
+    url(r'^ajax/', include(ajax_urls, namespace="ajax")),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
