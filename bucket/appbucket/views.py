@@ -9,4 +9,4 @@ def index(request):
         })
 
 def user_profile(request, user_id=None):
-    return render_to_response("user_profile.html")
+    return render_to_response("profile.html")
