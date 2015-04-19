@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from taggit.models import Tag
+from django.db.models import Count
 import hashlib
 
 class Achievement():
@@ -46,7 +47,7 @@ def user_profile(request, user_id=None):
 
     achievement = Achievement(num_completed, num_total)
 
-    user_tags = Tag.objects.filter(item__user=user)
+    user_tags = Tag.objects.filter(item__user=user).annotate(itemcount=Count('id')).order_by('-itemcount')
 
     context = {
         'email_hash'        : email_hash,

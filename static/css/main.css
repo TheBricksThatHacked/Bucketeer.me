@@ -6,6 +6,7 @@ body {
 
 .border-left {
   border-left: 1px solid #c4c4c4;
+  padding-left: 25px;
 }
 
 .form-well {
@@ -30,4 +31,27 @@ body {
 
 .checkbox label {
   font-size: 15px;
+}
+
+.tag {
+  cursor: pointer;
+}
+
+.item {
+  position: relative;
+
+}
+
+.delete-item {
+  opacity: 0;
+  color: #b94a48;
+  position: absolute;
+  left: -20px;
+  top: 3px;
+  transition:opacity 250ms ease-in;
+}
+
+.item:hover .delete-item {
+  opacity: 1;
+  cursor: pointer;
 }

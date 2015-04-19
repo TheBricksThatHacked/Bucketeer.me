@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block jumbotron %}
+{% csrf_token %}
 <div class="jumbotron">
     <div class="container">
         {% if achievement.active %}
@@ -64,32 +65,31 @@
     <div class="col-md-3 ">
         <h2><i class="fa fa-tags"></i> Tags</h2>
         <ul class="list-group">
-        {{user_tags}}
-            <li class="list-group-item">
-                <span class="badge">14</span> All
+            <li data-tag-selector="all" class="list-group-item tag">
+                All
             </li>
-            <li class="list-group-item">
-                <span class="badge">14</span> Travel
+            {% for tag in userTags %}
+            <li data-tag-selector="{{ tag }}" class="list-group-item tag">
+                <span class="badge">{{ tag.itemcount }}</span> {{ tag }}
             </li>
-            <li class="list-group-item">
-                <span class="badge">2</span> Achievement
-            </li>
-            <li class="list-group-item">
-                <span class="badge">1</span> Job
-            </li>
+            {% endfor %}
         </ul>
     </div>
     <div class="col-md-9 border-left">
         <h2><i class="fa fa-paper-plane-o"></i> List <a href="/addItem" class="btn btn-success btn-sm add-item"><i class="fa fa-plus"></i> Add to List</a></h2>
-        <ul class="list-unstyled">
-            {% for item in user_items %}
-                {% if item.completed_date %}
-                    <li><i class="fa fa-check-circle-o"></i> {{item.title}} <p>{{item.description}}</p></li>
-                {% else %}
-                    <li><i class="fa fa-circle-o"></i> {{item.title}} <p>{{item.description}}</p></li>
-                {% endif %}
-            {% empty %}
-                <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
+        <ul class="list-unstyled items">
+
+            {% for item in user_items %} {% if item.completed_date %}
+            <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-check-circle-o"></i> {{ item.title }}
+                <p>{{ item.description }}</p>
+            </li>
+            {% else %}
+            <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}"><i class="fa fa-circle-o"></i> {{ item.title }}
+                <p>{{ item.description }}</p>
+                <i class="fa fa-times delete-item"></i>
+            </li>
+            {% endif %} {% empty %}
+            <p>It looks like you do not have any bucket list items. Why not <a href="/addItem">add one</a>?</p>
             {% endfor %}
         </ul>
     </div>
