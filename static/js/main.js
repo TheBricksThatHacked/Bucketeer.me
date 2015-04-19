@@ -9,7 +9,13 @@ $(document).ready(function () {
       $('.'+tag).removeClass('hidden')
     }
 
-  })
+  });
+
+  $(document).on('click', '.delete-item', function () {
+    var itemId = $(this).parent().data('id');
+    console.log("Delete Item: " + itemId)
+
+  });
 
 });
 
