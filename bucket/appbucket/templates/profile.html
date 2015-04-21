@@ -82,7 +82,7 @@
         </h2>
         <ul class="list-unstyled items">
             {% for item in user_items %}
-                <li data-id="{{ item.id }}" class="item {% for tag in item.tags.all %} {{ tag }} {% endfor %}">
+                <li data-id="{{ item.id }}" class="item" data-tags="{% for tag in item.tags.all %} {{ tag }} {% endfor %}">
                     <i class="fa check-item {% if item.completed_date %}fa-check-circle-o{% else %}fa-circle-o{% endif %}"></i> {{ item.title }}
                     {% if user.id == profile_user.id %}
                         <a href="{% url 'app:edit_item' item.id %}"><i class="fa fa-pencil edit-item"></i></a>

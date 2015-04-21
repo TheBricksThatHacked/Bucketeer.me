@@ -5,8 +5,8 @@ $(document).ready(function() {
         if (tag === "all") {
             $('.item').removeClass('hidden');
         } else {
-            $('.item').not('.' + tag).addClass('hidden');
-            $('.' + tag).removeClass('hidden')
+            $('.item').not('.item[data-tags~="' + tag + '"]').addClass('hidden');
+            $('.item[data-tags~="' + tag + '"]').removeClass('hidden')
         }
 
     });
