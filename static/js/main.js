@@ -5,8 +5,8 @@ $(document).ready(function() {
         if (tag === "all") {
             $('.item').removeClass('hidden');
         } else {
-            $('.item').not('.' + tag).addClass('hidden');
-            $('.' + tag).removeClass('hidden')
+            $('.item').not('.item[data-tags~="' + tag + '"]').addClass('hidden');
+            $('.item[data-tags~="' + tag + '"]').removeClass('hidden')
         }
 
     });
@@ -99,7 +99,13 @@ function delete_item(id) {
 }
 
 function update_percent(percent) {
+    percent = roundDecimal(percent, 1);
     $("#percent-complete-display").html(percent);
     $("#percent-complete-bar").css("width", percent + "%");
     $("#percent-uncomplete-bar").css("width", 100 - percent + "%");
+}
+
+
+function roundDecimal(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
