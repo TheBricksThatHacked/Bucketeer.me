@@ -11,6 +11,7 @@ class Item(models.Model):
     completed_date = models.DateTimeField(blank=True, null=True)
     user = models.ForeignKey(User)
     tags = TaggableManager(blank=True)
+    private = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
