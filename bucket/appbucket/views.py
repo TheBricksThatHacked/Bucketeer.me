@@ -45,8 +45,16 @@ def user_profile(request, user_id=None):
     enc_email = profile_user.email.strip().lower().encode("utf-8")
     email_hash = hashlib.md5(enc_email).hexdigest()
 
-    user_items = Item.objects.filter(user = profile_user).order_by('completed_date')
-    items_completed = Item.objects.filter(user = profile_user).exclude(completed_date__isnull=True)
+    user_items = None
+    items_completed = None
+    is_own_profile = False
+    if (profile_user.id == request.user.id):
+        is_own_profile = True
+        user_items = Item.objects.filter(user = profile_user).order_by('completed_date')
+        items_completed = Item.objects.filter(user = profile_user).exclude(completed_date__isnull=True)
+    else:
+        user_items = Item.objects.filter(user = profile_user).order_by('completed_date').exclude(private = True)
+        items_completed = Item.objects.filter(user = profile_user).exclude(completed_date__isnull = True).exclude(private = True)
 
     num_total = len(user_items)
     num_completed = len(items_completed)
@@ -57,7 +65,7 @@ def user_profile(request, user_id=None):
     percentCompleted = ( num_completed / num_total ) * 100
     percentUnCompleted = 100 - percentCompleted
 
-    achievement, badges = get_badges(profile_user)
+    achievement, badges = get_badges(profile_user, is_own_profile)
 
 
     user_tags = Tag.objects.filter(item__user=profile_user).annotate(itemcount=Count('id')).order_by('-itemcount')
@@ -76,11 +84,19 @@ def user_profile(request, user_id=None):
 
     return render_to_response("profile.html", context, context_instance=RequestContext(request))
 
-def get_badges(user):
+def get_badges(user, include_private):
     badges = []
     achievement = Achievement("none")
-    num_items = Item.objects.filter(user = user).count()
-    num_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True).count()
+
+    num_items = 0
+    num_completed = 0
+    if include_private:
+        num_items = Item.objects.filter(user = user).count()
+        num_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True).count()
+    else:
+        num_items = Item.objects.filter(user = user).exclude(private = True).count()
+        num_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True).exclude(private = True).count()
+
 
     # World Traveler 
     #if Item.objects.filter(user = user).exclude(completed_date__isnull=True).tags.filter(tags__name__in = ["travel"]).count() >= 5:
