@@ -24,7 +24,7 @@
         {% endif %}
         <div class="row">
             <div class="col-md-4">
-                <img src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=300&amp;d=mm" class="img-responsive img-circle img-thumbnail" />
+                <img src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=300&amp;d={{ default_image_url }}" class="img-responsive img-circle img-thumbnail" />
             </div>
             <div class="col-md-8">
                 <h1>{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>

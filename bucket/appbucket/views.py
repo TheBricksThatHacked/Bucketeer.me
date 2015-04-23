@@ -42,6 +42,8 @@ def index(request):
 def user_profile(request, user_id=None):
     profile_user = get_object_or_404(User, id=user_id)
 
+    default_image_url = "http://bucketeer.me/static/bucket/default_bucket_person.png"
+
     enc_email = profile_user.email.strip().lower().encode("utf-8")
     email_hash = hashlib.md5(enc_email).hexdigest()
 
@@ -72,6 +74,7 @@ def user_profile(request, user_id=None):
         'user_tags'           : user_tags,
         'achievement'         : achievement,
         'badges'              : badges,
+        'default_image_url'   : default_image_url,
     }
 
     return render_to_response("profile.html", context, context_instance=RequestContext(request))
