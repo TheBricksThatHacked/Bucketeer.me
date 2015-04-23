@@ -14,7 +14,10 @@ class ProfileForm(forms.ModelForm):
         fields = ["location", "bio", "gender", "age"]
 
     def clean_age(self):
-        if (int(self.cleaned_data.get('age', 0)) < 0):
+        cleaned_age = self.cleaned_data.get('age', 0)
+        if cleaned_age == None:
+            cleaned_age = 0
+        if (int(cleaned_age) < 0):
             raise ValidationError("Invalid age.")
 
         return self.cleaned_data.get('age', 0)
