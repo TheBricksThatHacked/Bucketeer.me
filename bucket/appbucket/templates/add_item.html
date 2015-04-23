@@ -57,20 +57,20 @@
                         </div>
                         {% endfor %}
                     </div>
-                    
+
                     <div class="form-group {% if form.tags.errors or form.private.errors %}has-error{% endif %}">
                         <label for="inputStatus" class="control-label">Item Status <i class="fa fa-check-circle-o"></i></label>
                             <div class="checkbox">
                                 <label for="complete">
-                                    <input type="checkbox" name="complete" 
-                                        value="{% if form.complete.value %}{{ form.complete.value }}{% endif %}" />
+                                    <input type="checkbox" name="complete"
+                                        {% if form.complete.value %} checked {% endif %} />
                                     Complete
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label for="private">
-                                    <input type="checkbox" name="private" 
-                                        value="{% if form.private.value %}{{ form.private.value }}{% endif %}" />
+                                    <input type="checkbox" name="private"
+                                        {% if form.private.value %} checked {% endif %} />
                                     <span title="Private items are only visible to you.">Private</span>
                                 </label>
                             </div>

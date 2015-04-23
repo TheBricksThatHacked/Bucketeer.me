@@ -54,9 +54,11 @@ def user_profile(request, user_id=None):
         is_own_profile = True
         user_items = Item.objects.filter(user = profile_user).order_by('completed_date')
         items_completed = Item.objects.filter(user = profile_user).exclude(completed_date__isnull=True)
+        user_tags = Tag.objects.filter(item__user=profile_user).annotate(itemcount=Count('id')).order_by('-itemcount')
     else:
-        user_items = Item.objects.filter(user = profile_user).order_by('completed_date').exclude(private = True)
+        user_items = Item.objects.filter(user = profile_user).exclude(private = True).order_by('completed_date')
         items_completed = Item.objects.filter(user = profile_user).exclude(completed_date__isnull = True).exclude(private = True)
+        user_tags = Tag.objects.filter(item__user=profile_user, item__private = False).annotate(itemcount=Count('id')).order_by('-itemcount')
 
     num_total = len(user_items)
     num_completed = len(items_completed)
@@ -69,8 +71,6 @@ def user_profile(request, user_id=None):
 
     achievement, badges = get_badges(profile_user, is_own_profile)
 
-
-    user_tags = Tag.objects.filter(item__user=profile_user).annotate(itemcount=Count('id')).order_by('-itemcount')
 
     context = {
         'profile_user'        : profile_user,
@@ -101,7 +101,7 @@ def get_badges(user, include_private):
         num_completed = Item.objects.filter(user = user).exclude(completed_date__isnull=True).exclude(private = True).count()
 
 
-    # World Traveler 
+    # World Traveler
     #if Item.objects.filter(user = user).exclude(completed_date__isnull=True).tags.filter(tags__name__in = ["travel"]).count() >= 5:
     #    pass
     #badges.append('<span title="Complete 5 items tagged 'travel'" class="label label-success label-lg"><i class="fa fa-trophy"></i> World Traveler</span>')
@@ -203,6 +203,8 @@ def add_item(request):
             i.user = request.user
             if 'complete' in request.POST:
                 i.completed_date = datetime.now()
+            if 'private' in request.POST:
+                i.private = True
             i.save()
             item_form.save_m2m()
 
@@ -211,7 +213,7 @@ def add_item(request):
             add_success = True
     else:
         item_form = ItemForm()
-    # TODO process tags
+
     context = {
         "form"        : item_form,
         "add_success" : add_success,
@@ -228,6 +230,15 @@ def edit_item(request, item_id=None):
         item_form = ItemForm(request.POST, instance=i)
         if item_form.is_valid():
             i = item_form.save(commit=False)
+            if 'private' in request.POST:
+                i.private = True
+            else:
+                i.private = False
+            if 'complete' in request.POST:
+                i.completed_date = datetime.now()
+            else:
+                i.completed_date = None
+            print(request.POST)
             i.save()
             item_form.save_m2m()
             return redirect("app:my_profile")
