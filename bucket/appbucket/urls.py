@@ -7,7 +7,6 @@ urlpatterns = patterns('',
     url(r'^badges/$', 'appbucket.views.badges', name='badges'),
     url(r'^profile/$', 'appbucket.views.my_profile', name='my_profile'),
     url(r'^profile/id/(?P<user_id>\d+)/$', 'appbucket.views.user_profile', name='user_profile'),
-    # Following line makes it impossible to have a user named "edit"
     url(r'^profile/edit/$', 'appbucket.views.edit_profile', name='edit_profile'),
     url(r'^profile/(?P<user_name>[\w.@+-]+)/$', 'appbucket.views.user_profile', name='user_profile_name'),
     url(r'^addItem/$', 'appbucket.views.add_item', name='add_item'),

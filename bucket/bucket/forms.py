@@ -26,6 +26,15 @@ class UserForm(UserCreationForm):
     email = forms.EmailField(label='Email', required=True)
     first_name = forms.CharField(label='First Name', required=True)
     last_name = forms.CharField(label='Last Name', required=True)
+
+    def clean_username(self):
+        reserved_names = ["www", "edit", "id"]
+
+        username = self.cleaned_data["username"]
+        for reserved_name in reserved_names:
+            if (username == reserved_name):
+                raise forms.ValidationError("Invalid user name. Please choose a different name.")
+        return username
     
     class Meta:
         model = User
