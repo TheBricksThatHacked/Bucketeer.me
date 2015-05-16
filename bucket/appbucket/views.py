@@ -39,8 +39,12 @@ def badges(request):
 def index(request):
     return render_to_response("index.html", context_instance=RequestContext(request))
 
-def user_profile(request, user_id=None):
-    profile_user = get_object_or_404(User, id=user_id)
+def user_profile(request, user_id=None, user_name=None):
+    profile_user = None
+    if (user_id is not None):
+        profile_user = get_object_or_404(User, id=user_id)
+    else:
+        profile_user = get_object_or_404(User, username=user_name)
 
     default_image_url = "http://bucketeer.me/static/bucket/default_bucket_person.png"
 
@@ -140,7 +144,7 @@ def get_badges(user):
 
 @login_required
 def my_profile(request):
-    return user_profile(request, user_id=request.user.id)
+    return redirect("app:user_profile_name", user_name=request.user.username)
 
 @login_required
 def edit_profile(request):
