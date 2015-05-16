@@ -144,7 +144,7 @@ def get_badges(user):
 
 @login_required
 def my_profile(request):
-    return user_profile(request, user_id=request.user.id)
+    return redirect("app:user_profile_name", user_name=request.user.username)
 
 @login_required
 def edit_profile(request):
