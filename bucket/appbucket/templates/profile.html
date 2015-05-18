@@ -37,6 +37,7 @@
                     <p><i class="fa fa-map-marker"></i> {{ profile_user.profile.location }}</p>
                 {% endif %}
                 {% if badges %}
+                <div class="h3">Badges <span class="h6">(<a href="{% url "app:badges" %}">What's this?</a>)</span></div>
                 <p>
                     {% for badge in badges %}
                     {{ badge|safe }}
