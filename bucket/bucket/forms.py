@@ -15,11 +15,11 @@ class UserForm(UserCreationForm):
     """
     #All fields are required
     username = forms.RegexField(label="Username", max_length=30,
-        regex=r'^[a-zA-Z0-9.-]+$',
-        help_text = "Required. 30 characters or fewer. Letters, digits, '.' and '-' only.",
+        regex=r'^[a-z0-9.-]+$',
+        help_text = "Required. 30 characters or fewer. Lowercase letters, numbers, '.' and '-' only.",
         error_messages = 
         {
-            'invalid': "This value may contain only letters, numbers, '.' and '-'."
+            'invalid': "This value may contain only lowercase letters, numbers, '.' and '-'."
         }
     )
 

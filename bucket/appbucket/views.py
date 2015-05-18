@@ -43,8 +43,11 @@ def user_profile(request, user_id=None, user_name=None):
     profile_user = None
     if (user_id is not None):
         profile_user = get_object_or_404(User, id=user_id)
+    elif (user_name is not None):
+        profile_user = get_object_or_404(User, username=user_name.lower())
     else:
-        profile_user = get_object_or_404(User, username=user_name)
+        # No user given, so redirect to your own profile.
+        return redirect("app:user_profile_name", user_name=request.user.username)
 
     default_image_url = "http://bucketeer.me/static/bucket/default_bucket_person.png"
 
